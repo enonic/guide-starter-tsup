@@ -182,12 +182,12 @@ external: [
 import { getContent } from '/lib/xp/portal';
 
 export function get() {
-	const {
-		displayName,
-		page: {
-			regions
-		}
-	} = getContent();
+    const {
+        displayName,
+        page: {
+            regions
+        }
+    } = getContent();
 }
 ----
 
@@ -218,7 +218,7 @@ TIP: To fix that we have to list it under noExternals:
 [source,typescript]
 ----
 noExternal: [
-	'sha.js',
+    'sha.js',
 ],
 ----
 
