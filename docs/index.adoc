@@ -1,2 +1,390 @@
 = Starter tsup
+:hide-uri-scheme:
+:sectnums:
 :toc: right
+:toclevels: 4
+:coreJs: https://github.com/zloirock/core-js
+:esbuildPluginPolyfillNode: https://www.npmjs.com/package/esbuild-plugin-polyfill-node
+:excludingPackages: https://tsup.egoist.dev/#excluding-packages
+:globalObject: https://developer.mozilla.org/en-US/docs/Glossary/Global_object
+:globalThis: https://262.ecma-international.org/11.0/#sec-globalthis
+:gradleNodePlugin: https://github.com/node-gradle/gradle-node-plugin
+:gradleReleases: https://gradle.org/releases/
+:nvm: https://github.com/nvm-sh/nvm
+:start: https://developer.enonic.com/start
+
+== Features
+
+* Typescript support
+* Fast build times (tsup uses esbuild and swc)
+* Asyncronous (concurrent build targets)
+* Transpiling
+* Bundling
+* Tree-shaking
+* Polyfilling, injection and banner
+* Code splitting (chunks)
+
+== Create project
+
+To setup a project locally, run the following command:
+
+[source,bash]
+----
+enonic project create -r starter-tsup
+----
+
+TIP: *Don't have the Enonic CLI?* Visit the {start}[Getting started guide] to install it.
+
+== Build environment
+
+=== Enonic CLI
+
+The best way of working with Enonic XP projects is to use the Enonic CLI.
+
+TIP: *Don't have the Enonic CLI?* Visit the {start}[Getting started guide] to install it.
+
+=== Gradle
+
+We try to keep our starters up-to-date with the latest {gradleReleases}[Gradle releases].
+
+==== Check version
+
+You can check which version of gradle is in use by issuing this command:
+
+[source,bash]
+----
+./gradlew --version
+----
+
+==== Upgrade gradle
+
+TODO
+
+=== Node
+
+==== Version
+
+WARNING: Some node modules doesn't support the newest versions of Node (yet).
+
+For example the `node-sass` currently doesn't support Node version newer than 16.
+
+==== Gradle node plugin
+
+The tsup-starter uses the {gradleNodePlugin}[Gradle node plugin].
+
+The gradle node plugins is loaded like this:
+
+.build.gradle
+[source,gradle]
+----
+plugins {
+	id 'com.github.node-gradle.node' version '5.0.0'
+}
+----
+
+And configured like this:
+
+.build.gradle
+[source,gradle]
+----
+node {
+	// Whether to download and install a specific Node.js version or not
+	// If false, it will use the globally installed Node.js
+	// If true, it will download node using above parameters
+	// Note that npm is bundled with Node.js
+	download = true
+
+	// Version of node to download and install (only used if download is true)
+	// It will be unpacked in the workDir
+	version = "16.20.0"
+}
+----
+
+Any gradle task that runs scripts in node should depend on npmInstall:
+
+.build.gradle
+[source,gradle]
+----
+task myTask(type: NpmTask) {
+    dependsOn npmInstall
+}
+----
+
+==== System Node
+
+Sometimes you want to run node scripts directly (not via gradle). For example when running Enonic XP in <<DEV mode (watch)>>.
+
+TIP: {nvm}[Node version manager] can be used to have multiple versions of Node at your fingertips.
+
+In order to use the correct version of Node, use the following command:
+
+[source,bash]
+----
+nvm use
+----
+
+It will use the version contained in the ./.nvmrc file:
+
+..nvmrc
+[source,bash]
+----
+16.20.0
+----
+
+=== DEV mode (watch)
+
+TODO
+
+== Server-side code
+
+The JavaScript ecosystem is advancing rapidly, using more and more modern features, which typically isn't supported everywhere (yet).
+
+In order to use modern features, transpilers are used to convert modern code into more stable versions of ECMAScript, and polyfills are used to provide API's which are not present in the runtime environment.
+
+NOTE: Currently the Enonic XP JavaScript framework only has limited `ECAMScript 6/2015` support and only support the `CommonJS module` (CJS) format.
+
+=== Java libraries
+
+In order to use Enonic XP java libraries in your code, there are some steps required:
+
+:sectnums:
+==== Include
+
+Include the java library in
+
+.build.gradle
+[source,gradle]
+----
+dependencies {
+    include "com.enonic.xp:lib-portal:${xpVersion}"
+}
+----
+
+==== Externals
+
+The java library jar file typically contain a CJS wrapper which is required at runtime.
+
+The contents of the jar file is NOT available at compile time, so it cannot be bundled. Instead we tell the transpiler to treat the library import path as an external (expecting it to exist at runtime).
+
+./tsup/server.ts
+[source,typescript]
+----
+external: [
+    /^\/lib\/xp\//,
+]
+----
+
+==== Import
+
+./src/main/resources/site/page/examplePage/examplePage.ts
+[source,typescript]
+----
+import { getContent } from '/lib/xp/portal';
+
+export function get() {
+	const {
+		displayName,
+		page: {
+			regions
+		}
+	} = getContent();
+}
+----
+
+=== Node modules
+
+You can use node modules in your code, but there are come steps/caveats to consider:
+
+==== Installing
+
+You can use the following command to install a node module you want to use:
+
+[source,bash]
+----
+npm install --save sha.js
+----
+
+This will add `sha.js` under dependencies in the package.json file, and download and extract the package into node_modules/sha.js/
+
+==== Bundling
+
+By default starer-tsup bundles all imported modules {excludingPackages}[EXCEPT] dependencies and peerDependencies.
+
+WARNING: Since sha.js is listed under dependencies, it will [red]#NOT# be bundled!
+
+TIP: To fix that we have to list it under noExternals:
+
+./tsup/server.ts
+[source,typescript]
+----
+noExternal: [
+	'sha.js',
+],
+----
+
+==== Polyfill Node
+
+CAUTION: Node modules are typically run in Node, and thus expect Node API's to be present, which is not always the case.
+
+For example the `sha.js` module expects buffer to exist in the global scope, but it does NOT in the Enonic XP JavaScript framework runtime environment.
+
+We can use {esbuildPluginPolyfillNode}[esbuild-plugin-polyfill-node] to selectively polyfill only the parts of Node that is used by the node module:
+
+./tsup/server.ts
+[source,typescript]
+----
+import { polyfillNode } from 'esbuild-plugin-polyfill-node';
+
+esbuildPlugins: [
+    polyfillNode: {
+        globals: {
+            buffer: true
+        },
+        polyfills: {
+            buffer: true
+        }
+    }
+]
+----
+
+==== The global object
+
+Different JavaScript runtime environments have different properties on their {globalObject}[global object]
+
+In addition they even have different ways of accessing the global object.
+
+{globalThis}[globalThis], introduced in ES2020 aims to consolidate the increasingly fragmented ways of accessing the global object.
+
+Some node modules support multiple runtime environments, and uses the properties on the global object to determine what runtime environment the code is running under.
+
+CAUTION: One might be tempted to polyfill all the ways of accessing the global object, but that will typically break node modules that are trying to detect the runtime environment.
+
+WARNING: To make matters worse, some of the polyfills themselves expect things to be a certain way.
+For example the polyfilling of buffer only works if it can apply itself on the globals object.
+
+IMPORTANT: In the Enonic XP JavaScript framework, each controller run in it's own "sandbox" environment, so there really isn't a global object, there is rather a controller scope "local" object.
+
+TIP: In order for the buffer polyfill to work we can simply make a globalThis point to the controller scope:
+
+./tsup/server.ts
+[source,typescript]
+----
+esbuildOptions(options, context) {
+    options.banner = {
+        js: `const globalThis = (1, eval)('this');`
+    };
+}
+----
+
+==== Injection
+
+Sometimes all you need to polyfill is a `single function` rather than a whole API.
+
+{coreJs} provides a bunch of such minimal `single function` polyfills.
+
+TIP: If you only use `the function` in a single place, you can simply import the polyfill in that single file.
+But if you are using `the function` all over the place, you can use injection to make it work everywhere:
+
+./tsup/server.ts
+[source,typescript]
+----
+inject: [
+    'node_modules/core-js/stable/array/includes.js'
+]
+----
+
+==== Code splitting
+
+CAUTION: Everthing you add via imports, polyfills, banners, injections, etc increases the size of the resources which need to be loaded into memory at runtime. The more you add, the longer the warmup time becomes.
+
+In order to avoid loading the same code multiple times, shared code is split into chunk files, which are only loaded once, but can be used many times via require in the JavaScript controllers.
+
+It sorta like all the shared code exists in the global scope and don't need to be loaded.
+
+WARNING: An Enonic XP application jar file only has a single "root folder" which all libs are "merged" into, which can potentially cause file name collisions.
+
+NOTE: Libraries typically avoid file name collisions by using their own "namespace" inside the /lib folder.
+
+When it comes to files autogenerated by a build system, for example chunk files, they also need their own "namespace".
+
+In starter-tsup we can "namespace" it's chunks like this:
+
+./tsup/server.ts
+[source,typescript]
+----
+esbuildOptions(options, context) {
+    options.chunkNames = 'myAppChunks/[name]-[hash]';
+}
+----
+
+=== Tree-shaking
+
+The tools that supports tree-shaking typically only work with the `ECMAScript module` (ESM) format.
+
+starter-tsup uses esbuild to transpile the sources into ESM so that tree-shaking can be applied.
+
+Then it uses swc to transpile the code back to CJS (the format supported by Enonic XP JavaScript framework).
+
+== Client-side
+
+=== React
+
+TODO
+
+== Tools / IDE
+
+=== Type checking
+
+TODO
+
+== Code Hierarchy
+
+=== Admin
+
+TODO
+
+=== Assets
+
+TODO
+
+=== Error
+
+TODO
+
+=== I18n
+
+TODO
+
+=== Lib
+
+TODO
+
+=== Services
+
+TODO
+
+=== Site
+
+==== Page
+
+TODO
+
+==== Layout
+
+TODO
+
+==== Part
+
+TODO
+
+=== Static
+
+TODO
+
+=== Tasks
+
+TODO
+
+=== Webapp
+
+TODO
