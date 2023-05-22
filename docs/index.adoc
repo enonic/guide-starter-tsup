@@ -13,6 +13,7 @@
 :gradleIncrementalBuild: https://docs.gradle.org/current/userguide/incremental_build.html
 :gradleNodePlugin: https://github.com/node-gradle/gradle-node-plugin
 :gradleReleases: https://gradle.org/releases/
+:gradleUpgradeWrapper: https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:upgrading_wrapper
 :globalThis: https://262.ecma-international.org/11.0/#sec-globalthis
 :nvm: https://github.com/nvm-sh/nvm
 :start: https://developer.enonic.com/start
@@ -53,7 +54,7 @@ TIP: *Don't have the Enonic CLI?* Visit the {start}[Getting started guide] to in
 
 We try to keep our starters up-to-date with the latest {gradleReleases}[Gradle releases].
 
-==== Check version
+==== Version
 
 You can check which version of gradle is in use by issuing this command:
 
@@ -62,9 +63,16 @@ You can check which version of gradle is in use by issuing this command:
 ./gradlew --version
 ----
 
-==== Upgrade gradle
+==== Upgrade
 
-TODO
+You can upgrade your gradle wrapper by issuing this command:
+
+[source,bash]
+----
+./gradlew wrapper --gradle-version latest
+----
+
+Read more about {gradleUpgradeWrapper}[Upgrading the Gradle Wrapper].
 
 === Node
 
