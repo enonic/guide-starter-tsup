@@ -409,11 +409,33 @@ The starter includes two main ways of doing this. Read more under <<Assets>>.
 
 CAUTION: If you NEED Server-side Rendering (SSR), use {enonicReact4xp}[React4xp].
 
-== Tools / IDE
+== Tools
+
+=== Code completion
+
+When programming, it's very useful to get `code completion` and <<Type checking>> directly in the code editor.
+To enable this, IDE's will typically look for <<_tsconfig_json,tsconfig.json>> files. 
 
 === Type checking
 
-TODO
+In addition to `type checking` directly in the IDE, it's a good idea to make `type checking` part of the build process.
+In starter-tsup this is set up via `pre` statements in the scripts section of the package.json file. Type checking is currently skipped for development builds.
+
+The `check:types:*` scripts uses the same <<_tsconfig_json,tsconfig.json>> files as IDE's.
+
+=== tsconfig.json
+
+starter-tsup comes with three `tsconfig.json` files:
+
+1. ${PROJECT_DIR}/tsconfig.json
+2. ${PROJECT_DIR}/src/main/resources/assets/tsconfig.json
+3. ${PROJECT_DIR}/src/main/resources/static/tsconfig.json
+
+The `tsconfig.json` file at the root of the project is used for all code processing (except the assets and static folders), and is configured to match the Enonic XP server-side runtime environment.
+
+The two `tsconfig.json` files in assets and static, should be identical, and is configured for client-side runtime environment.
+
+WARNING: Do NOT set target in the ${PROJECT_DIR}/tsconfig.json, it will probably break the build. Target should always be set to 'es5' in the ${PROJECT_DIR}/tsup/server.ts file.
 
 == Code Hierarchy
 
