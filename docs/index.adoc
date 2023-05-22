@@ -6,19 +6,27 @@
 
 :coreJs: https://github.com/zloirock/core-js
 :csp: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+
+:enonicAssetService: https://developer.enonic.com/docs/xp/stable/runtime/engines/asset-service
+:enonicAssetUrl: https://developer.enonic.com/docs/xp/stable/api/lib-portal#asseturl
 :enonicCSP: https://developer.enonic.com/docs/content-studio/stable/security#content_security_policy
 :enonicDevMode: https://developer.enonic.com/docs/xp/stable/apps/build-system#development_mode
+:enonicLibStatic: https://developer.enonic.com/docs/static-asset-lib/master
+:enonicReact4xp: https://developer.enonic.com/docs/react4xp/
+:enonicStart: https://developer.enonic.com/start
+
 :esbuildPluginPolyfillNode: https://www.npmjs.com/package/esbuild-plugin-polyfill-node
 :excludingPackages: https://tsup.egoist.dev/#excluding-packages
 :globalObject: https://developer.mozilla.org/en-US/docs/Glossary/Global_object
+:globalThis: https://262.ecma-international.org/11.0/#sec-globalthis
+
 :gradleContinuousBuild: https://docs.gradle.org/current/userguide/incremental_build.html#sec:task_input_output_continuous_build
 :gradleIncrementalBuild: https://docs.gradle.org/current/userguide/incremental_build.html
 :gradleNodePlugin: https://github.com/node-gradle/gradle-node-plugin
 :gradleReleases: https://gradle.org/releases/
 :gradleUpgradeWrapper: https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:upgrading_wrapper
-:globalThis: https://262.ecma-international.org/11.0/#sec-globalthis
+
 :nvm: https://github.com/nvm-sh/nvm
-:start: https://developer.enonic.com/start
 :tsupWatchMode: https://tsup.egoist.dev/#watch-mode
 :userAgent: https://developer.mozilla.org/en-US/docs/Glossary/User_agent
 :webpackCache: https://webpack.js.org/configuration/cache/
@@ -43,7 +51,7 @@ To setup a project locally, run the following command:
 enonic project create -r starter-tsup
 ----
 
-TIP: *Don't have the Enonic CLI?* Visit the {start}[Getting started guide] to install it.
+TIP: *Don't have the Enonic CLI?* Visit the {enonicStart}[Getting started guide] to install it.
 
 == Build environment
 
@@ -51,7 +59,7 @@ TIP: *Don't have the Enonic CLI?* Visit the {start}[Getting started guide] to in
 
 The best way of working with Enonic XP projects is to use the Enonic CLI.
 
-TIP: *Don't have the Enonic CLI?* Visit the {start}[Getting started guide] to install it.
+TIP: *Don't have the Enonic CLI?* Visit the {enonicStart}[Getting started guide] to install it.
 
 === Gradle
 
@@ -382,7 +390,7 @@ There are many ways of developing client-side code in Enonic XP:
 
 * The most common way is to use the <<Assets>> folder.
 * This can be improved upon by using <<Static,lib-static>>.
-* It can be provided by <<Services>>, <<Mappings, Mapped>> to controllers, and even routed via <<Webapp>> (or <<Admin>>) urls.
+* It can be provided by <<Services>>, <<Site Mappings>>, <<Webapp>>, or <<Admin>>.
 * Client-side code can be inlined in <<Components, controllers>>.
 * Web frameworks like <<React>> can be used.
 * <<Content Security Policy>> is enabled by default and can be configured for improved security.
@@ -395,7 +403,11 @@ Enonic XP has some configurable {enonicCSP}[Content Security Policy] defaults, b
 
 === React
 
-TODO
+starter-tsup is able to transpile React TSX/JSX source files into JavaScript code for the browser.
+
+The starter includes two main ways of doing this. Read more under <<Assets>>.
+
+CAUTION: If you NEED Server-side Rendering (SSR), use {enonicReact4xp}[React4xp].
 
 == Tools / IDE
 
@@ -411,7 +423,34 @@ TODO
 
 === Assets
 
-TODO
+starter-tsup provides two main ways of providing client-side assets:
+
+1. Either from the `assets` folder via the <<Service, Assets service>>
+2. Or from the <<Static>> folder via <<Site Mappings>> or <<Webapp>> (even <<Admin>>)
+
+TIP: We recommend using the <<Static>> folder, since it enables immuteable urls: Urls that can be cached "forever".
+
+==== Assets service
+
+WARNING: Any files in the assets folder are PUBLICLY available to EVERYONE via the {enonicAssetService}[Assets service]. If you need some security, do NOT put files in the assets folder. Rather put them somewhere else, and write your own controllers, and implement some security.
+
+TIP: Any {enonicAssetUrl}[assetUrl] includes a build-id hash number. Which means, everytime you deploy a new build, the url changes. So even though the asset files are probably [red]#NOT changed#, they are still re-downloaded by the browser. Which is why we recommend using the <<Static>> folder instead.
+
+==== Static
+
+Files in the Static folder are not available via the <<Assets service>>. Instead they are made available via the {enonicLibStatic}[Static Assets Library].
+
+In order to enable immuteable urls, a contenthash is added to the files names at compile time. The contenthash is generated from the file content (and location) and only changes, if the content (or location) of the file changes. This means that the browser can cache the asset "forever", and everytime it encounters the url, it can simply load the asset from it's cache.
+
+Whenever you change a file, it will have a new contenthash, and thus a new url. In order for the browser to load the new url, the html repsonse from the server needs to provide the new url. This is made possible by a `manifest` file, which lists what the current contenthash is.
+
+There are many ways of serving the files from the Static folder to the browser. The starter contains examples on how it can be done.
+
+If you are writing code inside the <<Site>> folder, we recommend using `/lib/getImmuteableSiteUrl`.
+
+If you are writing code inside the <<Webapp>> folder, we recommend using `/webapp/getImmuteableWebappUrl`.
+
+If you are writing code inside the <<Admin>> folder, we recommend using <<TODO>>
 
 === Error
 
@@ -445,11 +484,7 @@ TODO
 
 TODO
 
-==== Mappings
-
-TODO
-
-=== Static
+==== Site Mappings
 
 TODO
 
