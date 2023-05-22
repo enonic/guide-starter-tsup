@@ -437,11 +437,25 @@ The two `tsconfig.json` files in assets and static, should be identical, and is 
 
 WARNING: Do NOT set target in the ${PROJECT_DIR}/tsconfig.json, it will probably break the build. Target should always be set to 'es5' in the ${PROJECT_DIR}/tsup/server.ts file.
 
+TIP: Sometimes a folder may contain both code for the server-side and the client-side. Using different include and exclude lists in multiple `tsconfig.*.json` files makes it possible to configure strict type-checking for all code in those folders, to be run as part of the build process.
+
+CAUTION: It seems IDE's are only able to read a single `tsconfig.json` file per folder, so it's currently only possible to setup relaxed/permissive type checking when server and client side code is "mixed". Let us know if you discover a way to setup strict type-checking. 🙏
+
 == Code Hierarchy
 
 === Admin
 
-TODO
+==== Tool
+
+There is an exampleTool included in the starter.
+
+==== Widgets
+
+The starter includes examples for the following widget interfaces:
+
+* Context panel
+* Menuitem
+* Dahboard
 
 === Assets
 
