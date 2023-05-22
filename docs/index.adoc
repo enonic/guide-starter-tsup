@@ -5,6 +5,8 @@
 :toclevels: 4
 
 :coreJs: https://github.com/zloirock/core-js
+:csp: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+:enonicCSP: https://developer.enonic.com/docs/content-studio/stable/security#content_security_policy
 :enonicDevMode: https://developer.enonic.com/docs/xp/stable/apps/build-system#development_mode
 :esbuildPluginPolyfillNode: https://www.npmjs.com/package/esbuild-plugin-polyfill-node
 :excludingPackages: https://tsup.egoist.dev/#excluding-packages
@@ -18,6 +20,7 @@
 :nvm: https://github.com/nvm-sh/nvm
 :start: https://developer.enonic.com/start
 :tsupWatchMode: https://tsup.egoist.dev/#watch-mode
+:userAgent: https://developer.mozilla.org/en-US/docs/Glossary/User_agent
 :webpackCache: https://webpack.js.org/configuration/cache/
 
 == Features
@@ -369,6 +372,27 @@ Then it uses swc to transpile the code back to CJS (the format supported by Enon
 
 == Client-side
 
+Client-side and server-side are web development terms that describe where application code runs.
+
+When people talk about "the client-side", they typically just mean THEIR web browser, not considering other {userAgent}[User-Agents] like bots/robots/web-crawlers, headless browsers, legacy browsers or even other modern browser alternatives :)
+
+In the context of build systems, the source code is processed in different ways, depending upon which `target plarform` the code is supposed to run on.
+
+There are many ways of developing client-side code in Enonic XP:
+
+* The most common way is to use the <<Assets>> folder.
+* This can be improved upon by using <<Static,lib-static>>.
+* It can be provided by <<Services>>, <<Mappings, Mapped>> to controllers, and even routed via <<Webapp>> (or <<Admin>>) urls.
+* Client-side code can be inlined in <<Components, controllers>>.
+* Web frameworks like <<React>> can be used.
+* <<Content Security Policy>> is enabled by default and can be configured for improved security.
+
+=== Content Security Policy
+
+{csp}[Content Security Policy (CSP)] makes it possible to configure what is allowed to run on the client-side. You can limit scripts, images, media and stylesheets. You can even configure if and how violations are reported.
+
+Enonic XP has some configurable {enonicCSP}[Content Security Policy] defaults, but you can override these by using the `content-security-policy` response header (or a `<meta http-equiv="Content-Security-Policy"/>` tag in html head).
+
 === React
 
 TODO
@@ -407,15 +431,21 @@ TODO
 
 === Site
 
-==== Page
+==== Components
+
+===== Page
 
 TODO
 
-==== Layout
+===== Layout
 
 TODO
 
-==== Part
+===== Part
+
+TODO
+
+==== Mappings
 
 TODO
 
