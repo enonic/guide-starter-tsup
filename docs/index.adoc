@@ -3,15 +3,21 @@
 :sectnums:
 :toc: right
 :toclevels: 4
+
 :coreJs: https://github.com/zloirock/core-js
+:enonicDevMode: https://developer.enonic.com/docs/xp/stable/apps/build-system#development_mode
 :esbuildPluginPolyfillNode: https://www.npmjs.com/package/esbuild-plugin-polyfill-node
 :excludingPackages: https://tsup.egoist.dev/#excluding-packages
 :globalObject: https://developer.mozilla.org/en-US/docs/Glossary/Global_object
-:globalThis: https://262.ecma-international.org/11.0/#sec-globalthis
+:gradleContinuousBuild: https://docs.gradle.org/current/userguide/incremental_build.html#sec:task_input_output_continuous_build
+:gradleIncrementalBuild: https://docs.gradle.org/current/userguide/incremental_build.html
 :gradleNodePlugin: https://github.com/node-gradle/gradle-node-plugin
 :gradleReleases: https://gradle.org/releases/
+:globalThis: https://262.ecma-international.org/11.0/#sec-globalthis
 :nvm: https://github.com/nvm-sh/nvm
 :start: https://developer.enonic.com/start
+:tsupWatchMode: https://tsup.egoist.dev/#watch-mode
+:webpackCache: https://webpack.js.org/configuration/cache/
 
 == Features
 
@@ -131,9 +137,37 @@ It will use the version contained in the ./.nvmrc file:
 16.20.0
 ----
 
-=== DEV mode (watch)
+=== Incremental build
 
-TODO
+"An important part of any build tool is the ability to avoid doing work that has already been done."
+-- Gradle Inc
+
+==== Continuous build
+
+Gradle does support {gradleIncrementalBuild}[incremental build], but due to reasons I will explain: using gradle in {gradleContinuousBuild}[continuous mode] is NOT the most efficient option. Gradle can detect file changes, but it doesn't know much about the dependency tree of javascript files, aka which other files needs to be recompiled once a single javascript file is changed. Gradle will simply rebuild "everything" by calling:
+
+[source,bash]
+----
+npm run build
+----
+
+tsup/esbuild doesn't support filesystem caching, like {webpackCache}[Webpack], but they do support {tsupWatchMode}[watch mode].
+
+==== Watch mode
+
+Tsup will watch files for changes and only recompile that file, and any files that depend on that file, and files that depend on them, and so on..., but nothing else, aka the minimal amout of recompilation for a "complete" build.
+
+WARNING: However this does NOT produce a jar file, which is what Enonic XP requires to deploy apps.
+
+TIP: To run new code WITHOUT redeploying an app, start the Enonic XP distribution in DEV mode.
+
+==== DEV mode
+
+Enonic XP can be run in a special mode known as {enonicDevMode}[development mode]. In this mode, XP will read files directly from their source locations (`build/resources/main`, and even `src/main/resources`).
+
+CAUTION: In order for this to work Enonic XP needs to know, where those folders are. That information is contained within the jar file. So you need to make an initial deployment of your application jar file, and whenever you move your code tree on your file system.
+
+CAUTION: Enonic XP will "fallback" to the jar file, if a file is not found in it's source locations. So when you delete a source file, it is probably a good idea to do a full build and redeploy a fresh jar file without the deleted file.
 
 == Server-side code
 
