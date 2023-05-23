@@ -510,24 +510,24 @@ The starter includes an example service.
 
 ===== Page
 
-TODO
+The starter includes an example page component.
 
 ===== Layout
 
-TODO
+The starter includes an example layout component.
 
 ===== Part
 
-TODO
+The starter includes an example part component.
 
 ==== Site Mappings
 
-TODO
+The starter includes an example site mapping.
 
 === Tasks
 
-TODO
+The starter includes a couple tasks controller examples.
 
 === Webapp
 
-TODO
+The starter includes an example webapp controller.
