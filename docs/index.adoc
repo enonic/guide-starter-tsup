@@ -498,11 +498,11 @@ The starter includes a couple phrases files.
 
 === Lib
 
-TODO
+The starter includes several lib examples.
 
 === Services
 
-TODO
+The starter includes an example service.
 
 === Site
 
