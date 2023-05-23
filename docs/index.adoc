@@ -486,15 +486,15 @@ If you are writing code inside the <<Site>> folder, we recommend using `/lib/get
 
 If you are writing code inside the <<Webapp>> folder, we recommend using `/webapp/getImmuteableWebappUrl`.
 
-If you are writing code inside the <<Admin>> folder, we recommend using <<TODO>>
+If you are writing code inside the <<Admin>> folder, we recommend using `/admin/tools/exampleTool/getImmuteableAdminUrl`.
 
 === Error
 
-TODO
+The starter includes an example error controller.
 
 === I18n
 
-TODO
+The starter includes a couple phrases files.
 
 === Lib
 
