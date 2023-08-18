@@ -30,44 +30,57 @@
 :tsupWatchMode: https://tsup.egoist.dev/#watch-mode
 :userAgent: https://developer.mozilla.org/en-US/docs/Glossary/User_agent
 :webpackCache: https://webpack.js.org/configuration/cache/
+:imagesdir: images
 
 == Features
 
+Build:
+
 * Typescript support
-* Fast build times (tsup uses esbuild and swc)
-* Asyncronous (concurrent build targets)
-* Transpiling
+* Fast build times (`tsup` uses `esbuild` and `swc`)
+* Asynchronous (concurrent build targets)
+* Transpilation (TypeScript to JS)
 * Bundling
 * Tree-shaking
 * Polyfilling, injection and banner
 * Code splitting (chunks)
 
+Enonic XP APIs:
+
+* Application (creation of virtual applications)
+* Project (creation and deletion of content projects)
+* Scheme (dynamic creation of content type schemas)
+* Task (submitting and managing server-side tasks)
+
+UI:
+
+* Admin tool
+* Widgets
+* Page components
+* Use of React
+
 == Create project
 
-To setup a project locally, run the following command:
+To set up a project locally, you will need Enonic CLI.
+
+TIP: *Don't have the Enonic CLI?* Visit the {enonicStart}[Getting started guide] to install it.
+
+Once you have the CLI, run the following command to create a new Enonic project based on this starter:
 
 [source,bash]
 ----
 enonic project create -r starter-tsup
 ----
 
-TIP: *Don't have the Enonic CLI?* Visit the {enonicStart}[Getting started guide] to install it.
-
 == Build environment
-
-=== Enonic CLI
-
-The best way of working with Enonic XP projects is to use the Enonic CLI.
-
-TIP: *Don't have the Enonic CLI?* Visit the {enonicStart}[Getting started guide] to install it.
 
 === Gradle
 
-We try to keep our starters up-to-date with the latest {gradleReleases}[Gradle releases].
+Enonic projects are typically built with Gradle and come with bundled Gradle wrapper which we aim to keep up-to-date with the latest {gradleReleases}[Gradle releases].
 
 ==== Version
 
-You can check which version of gradle is in use by issuing this command:
+You can check which version of Gradle wrapper your project is using by issuing this command:
 
 [source,bash]
 ----
@@ -76,7 +89,7 @@ You can check which version of gradle is in use by issuing this command:
 
 ==== Upgrade
 
-You can upgrade your gradle wrapper by issuing this command:
+You can upgrade your Gradle wrapper by issuing this command:
 
 [source,bash]
 ----
@@ -89,15 +102,13 @@ Read more about {gradleUpgradeWrapper}[Upgrading the Gradle Wrapper].
 
 ==== Version
 
-WARNING: Some node modules doesn't support the newest versions of Node (yet).
+We suggest to keep your project on the latest LTS version of Node, which can be found https://nodejs.org/en/download/releases[here].
 
-For example the `node-sass` currently doesn't support Node version newer than 16.
+WARNING: Some node modules don't support the newest versions of Node (yet). In this case you might get build warnings or even errors. This can typically be solved by downgrading Node again or verifying (in `package.json`) whether version of the problematic module is outdated.
 
 ==== Gradle node plugin
 
-The tsup-starter uses the {gradleNodePlugin}[Gradle node plugin].
-
-The gradle node plugins is loaded like this:
+The Tsup Starter uses the {gradleNodePlugin}[Gradle node plugin], which is defined like this:
 
 .build.gradle
 [source,gradle]
@@ -107,7 +118,7 @@ plugins {
 }
 ----
 
-And configured like this:
+and configured like this:
 
 .build.gradle
 [source,gradle]
@@ -121,23 +132,23 @@ node {
 
 	// Version of node to download and install (only used if download is true)
 	// It will be unpacked in the workDir
-	version = "16.20.0"
+	version = "18.17.1"
 }
 ----
 
-Any gradle task that runs scripts in node should depend on npmInstall:
+Any Gradle task that runs scripts in Node should depend on `npmInstall`:
 
 .build.gradle
 [source,gradle]
 ----
-task myTask(type: NpmTask) {
+task.register('myTask', NpmTask) {
     dependsOn npmInstall
 }
 ----
 
 ==== System Node
 
-Sometimes you want to run node scripts directly (not via gradle). For example when running Enonic XP in <<DEV mode (watch)>>.
+Sometimes you want to run node scripts directly (not via Gradle). For example, to run Enonic XP in the <<Watch mode>>.
 
 TIP: {nvm}[Node version manager] can be used to have multiple versions of Node at your fingertips.
 
@@ -148,12 +159,12 @@ In order to use the correct version of Node, use the following command:
 nvm use
 ----
 
-It will use the version contained in the ./.nvmrc file:
+It will use the version specified in the `.nvmrc` file:
 
 ..nvmrc
 [source,bash]
 ----
-16.20.0
+18.17.1
 ----
 
 === Incremental build
@@ -163,47 +174,50 @@ It will use the version contained in the ./.nvmrc file:
 
 ==== Continuous build
 
-Gradle does support {gradleIncrementalBuild}[incremental build], but due to reasons I will explain: using gradle in {gradleContinuousBuild}[continuous mode] is NOT the most efficient option. Gradle can detect file changes, but it doesn't know much about the dependency tree of javascript files, aka which other files needs to be recompiled once a single javascript file is changed. Gradle will simply rebuild "everything" by calling:
+Gradle does support {gradleIncrementalBuild}[incremental build], but using the {gradleContinuousBuild}[continuous mode] is NOT the most efficient option. Gradle can detect file changes, but it doesn't know much about the dependency tree of JavaScript files, i.e. which other files need to be recompiled once a single JavaScript file is changed. Gradle will simply rebuild "everything" by calling:
 
 [source,bash]
 ----
 npm run build
 ----
 
-tsup/esbuild doesn't support filesystem caching, like {webpackCache}[Webpack], but they do support {tsupWatchMode}[watch mode].
+Tsup/esbuild doesn't support filesystem caching, like {webpackCache}[Webpack], but they do support {tsupWatchMode}[watch mode].
 
 ==== Watch mode
 
-Tsup will watch files for changes and only recompile that file, and any files that depend on that file, and files that depend on them, and so on..., but nothing else, aka the minimal amout of recompilation for a "complete" build.
+Tsup will watch files for changes and only recompile that file, and any files that depend on that file, and files that depend on them, and so on..., but nothing else, i.e. the minimal amount of recompilation for a "complete" build. To make Tsup Starter "hot reload" client-side assets, execute the following command:
 
-WARNING: However this does NOT produce a jar file, which is what Enonic XP requires to deploy apps.
+[source,bash]
+----
+npm run watch
+----
 
-TIP: To run new code WITHOUT redeploying an app, start the Enonic XP distribution in DEV mode.
+WARNING: However, this does *not* produce a jar file, which is what Enonic XP requires to deploy apps.
 
-==== DEV mode
+TIP: To run new code *without* redeploying an app, start the Enonic XP distribution in Development mode (by passing `--dev` argument to CLI command when starting an Enonic sandbox or deploying a project), then start the project in watch mode with the command above.
 
-Enonic XP can be run in a special mode known as {enonicDevMode}[development mode]. In this mode, XP will read files directly from their source locations (`build/resources/main`, and even `src/main/resources`).
+==== Development mode
 
-CAUTION: In order for this to work Enonic XP needs to know, where those folders are. That information is contained within the jar file. So you need to make an initial deployment of your application jar file, and whenever you move your code tree on your file system.
+Enonic XP can be run in a special mode known as {enonicDevMode}[Development mode]. In this mode, XP will read files directly from their source locations (`build/resources/main`, and even `src/main/resources`).
 
-CAUTION: Enonic XP will "fallback" to the jar file, if a file is not found in it's source locations. So when you delete a source file, it is probably a good idea to do a full build and redeploy a fresh jar file without the deleted file.
+CAUTION: In order for this to work, Enonic XP needs to know where those folders are. That information is contained within the app's jar file. So you need to make an initial deployment of your jar file, or whenever you rearrange files in your project. Enonic XP will "fall back" to the jar file, if a file is not found in its source location. So when you delete a source file, it is probably a good idea to do a full build and redeploy a fresh jar file without the deleted file.
 
 == Server-side code
 
 The JavaScript ecosystem is advancing rapidly, using more and more modern features, which typically isn't supported everywhere (yet).
 
-In order to use modern features, transpilers are used to convert modern code into more stable versions of ECMAScript, and polyfills are used to provide API's which are not present in the runtime environment.
+In order to use modern features, transpilers are used to convert modern code into more stable versions of ECMAScript, and polyfills are used to provide APIs which are not present in the runtime environment.
 
-NOTE: Currently the Enonic XP JavaScript framework only has limited `ECAMScript 6/2015` support and only support the `CommonJS module` (CJS) format.
+NOTE: Currently, Enonic XP JavaScript framework only has limited `ECAMScript 6/2015` support and supports only the `CommonJS module` (CJS) format.
 
 === Java libraries
 
-In order to use Enonic XP java libraries in your code, there are some steps required:
+In order to use Enonic XP *Java* API libraries in your code, the following steps are required:
 
 :sectnums:
 ==== Include
 
-Include the java library in
+Include a Java library in your `build.gradle`:
 
 .build.gradle
 [source,gradle]
@@ -215,9 +229,9 @@ dependencies {
 
 ==== Externals
 
-The java library jar file typically contain a CJS wrapper which is required at runtime.
+Jar file of a Java library typically contains a CJS wrapper which is required at runtime.
 
-The contents of the jar file is NOT available at compile time, so it cannot be bundled. Instead we tell the transpiler to treat the library import path as an external (expecting it to exist at runtime).
+The contents of the jar file is NOT available at compile time, so it cannot be bundled. Instead, we tell the transpiler to treat the library import path as an external (expecting it to exist at runtime).
 
 ./tsup/server.ts
 [source,typescript]
@@ -250,22 +264,20 @@ You can use node modules in your code, but there are come steps/caveats to consi
 
 ==== Installing
 
-You can use the following command to install a node module you want to use:
+You can use the following command to install a node module you want to use (for example, `sha.js`):
 
 [source,bash]
 ----
 npm install --save sha.js
 ----
 
-This will add `sha.js` under dependencies in the package.json file, and download and extract the package into node_modules/sha.js/
+This will add `sha.js` under dependencies in the `package.json` file, and download and extract the package into `node_modules` folder of your project.
 
 ==== Bundling
 
-By default starer-tsup bundles all imported modules {excludingPackages}[EXCEPT] dependencies and peerDependencies.
+By default, Tsup starter bundles all imported modules {excludingPackages}[EXCEPT] dependencies and peerDependencies. Since sha.js (in the example above) is added as a dependency, it will [red]#NOT# be bundled!
 
-WARNING: Since sha.js is listed under dependencies, it will [red]#NOT# be bundled!
-
-TIP: To fix that we have to list it under noExternals:
+To fix that we have to list it under `noExternals`:
 
 ./tsup/server.ts
 [source,typescript]
@@ -277,9 +289,9 @@ noExternal: [
 
 ==== Polyfill Node
 
-CAUTION: Node modules are typically run in Node, and thus expect Node API's to be present, which is not always the case.
+CAUTION: Node modules are typically run in Node, and thus expect Node APIs to be present, which is not always the case.
 
-For example the `sha.js` module expects buffer to exist in the global scope, but it does NOT in the Enonic XP JavaScript framework runtime environment.
+For example, the `sha.js` module expects buffer to exist in the global scope, but it does NOT exist in the Enonic XP JavaScript framework runtime environment.
 
 We can use {esbuildPluginPolyfillNode}[esbuild-plugin-polyfill-node] to selectively polyfill only the parts of Node that is used by the node module:
 
@@ -300,24 +312,21 @@ esbuildPlugins: [
 ]
 ----
 
-==== The global object
+==== The Global object
 
-Different JavaScript runtime environments have different properties on their {globalObject}[global object]
+Different JavaScript runtime environments have different properties on their {globalObject}[Global object]
 
-In addition they even have different ways of accessing the global object.
+In addition, they even have different ways of accessing the Global object.
 
-{globalThis}[globalThis], introduced in ES2020 aims to consolidate the increasingly fragmented ways of accessing the global object.
+{globalThis}[globalThis], introduced in ES2020 aims to consolidate the increasingly fragmented ways of accessing the Global object.
 
-Some node modules support multiple runtime environments, and uses the properties on the global object to determine what runtime environment the code is running under.
+Some node modules support multiple runtime environments, and use the properties of the Global object to determine what runtime environment the code is running in.
 
-CAUTION: One might be tempted to polyfill all the ways of accessing the global object, but that will typically break node modules that are trying to detect the runtime environment.
+CAUTION: One might be tempted to polyfill all the ways of accessing the Global object, but that will typically break node modules that are trying to detect the runtime environment.
 
-WARNING: To make matters worse, some of the polyfills themselves expect things to be a certain way.
-For example the polyfilling of buffer only works if it can apply itself on the globals object.
+To make matters worse, some of the polyfills themselves expect things to be a certain way.
 
-IMPORTANT: In the Enonic XP JavaScript framework, each controller run in it's own "sandbox" environment, so there really isn't a global object, there is rather a controller scope "local" object.
-
-TIP: In order for the buffer polyfill to work we can simply make a globalThis point to the controller scope:
+For example, polyfilling of buffer only works if it can apply itself on the Global object. In the Enonic XP JavaScript framework, each controller runs in its own "sandbox" environment, so there really isn't a Global object, there is rather a controller scope "local" object. In order for the buffer polyfill to work we can simply make `globalThis` point to the controller scope:
 
 ./tsup/server.ts
 [source,typescript]
@@ -348,11 +357,11 @@ inject: [
 
 ==== Code splitting
 
-CAUTION: Everthing you add via imports, polyfills, banners, injections, etc increases the size of the resources which need to be loaded into memory at runtime. The more you add, the longer the warmup time becomes.
+CAUTION: Everything you add via imports, polyfills, banners, injections, etc increases the size of the resources which need to be loaded into memory at runtime. The more you add, the longer the warmup time becomes.
 
 In order to avoid loading the same code multiple times, shared code is split into chunk files, which are only loaded once, but can be used many times via require in the JavaScript controllers.
 
-It sorta like all the shared code exists in the global scope and don't need to be loaded.
+It's sort of like all the shared code exists in the global scope and don't need to be loaded.
 
 WARNING: An Enonic XP application jar file only has a single "root folder" which all libs are "merged" into, which can potentially cause file name collisions.
 
@@ -360,7 +369,7 @@ NOTE: Libraries typically avoid file name collisions by using their own "namespa
 
 When it comes to files autogenerated by a build system, for example chunk files, they also need their own "namespace".
 
-In starter-tsup we can "namespace" it's chunks like this:
+In Tsup Starter we can "name space" its chunks like this:
 
 ./tsup/server.ts
 [source,typescript]
@@ -372,24 +381,24 @@ esbuildOptions(options, context) {
 
 === Tree-shaking
 
-The tools that supports tree-shaking typically only work with the `ECMAScript module` (ESM) format.
+Tree shaking refers to the process of eliminating or "shaking off" dead code or unused code from the final bundled output. Tools that support tree-shaking typically only work with the `ECMAScript module` (ESM) format.
 
-starter-tsup uses esbuild to transpile the sources into ESM so that tree-shaking can be applied.
+Tsup Starter uses `esbuild` to transpile sources into ESM so that tree-shaking can be applied.
 
-Then it uses swc to transpile the code back to CJS (the format supported by Enonic XP JavaScript framework).
+Then it uses `swc` to transpile the code back to CJS (the format supported by Enonic XP JavaScript framework).
 
 == Client-side
 
-Client-side and server-side are web development terms that describe where application code runs.
+Client-side and Server-side are web development terms that describe where application code runs.
 
-When people talk about "the client-side", they typically just mean THEIR web browser, not considering other {userAgent}[User-Agents] like bots/robots/web-crawlers, headless browsers, legacy browsers or even other modern browser alternatives :)
+When people talk about "the client-side", they typically just mean their web browser, not considering other {userAgent}[User-Agents] like bots/robots/web-crawlers, headless browsers, legacy browsers or even other modern browser alternatives :)
 
 In the context of build systems, the source code is processed in different ways, depending upon which `target plarform` the code is supposed to run on.
 
 There are many ways of developing client-side code in Enonic XP:
 
 * The most common way is to use the <<Assets>> folder.
-* This can be improved upon by using <<Static,lib-static>>.
+* It can be improved upon by using <<Static,lib-static>>.
 * It can be provided by <<Services>>, <<Site Mappings>>, <<Webapp>>, or <<Admin>>.
 * Client-side code can be inlined in <<Components, controllers>>.
 * Web frameworks like <<React>> can be used.
@@ -403,86 +412,128 @@ Enonic XP has some configurable {enonicCSP}[Content Security Policy] defaults, b
 
 === React
 
-starter-tsup is able to transpile React TSX/JSX source files into JavaScript code for the browser.
+Tsup Starter is able to transpile React TSX/JSX source files into JavaScript code for the browser.
 
-The starter includes two main ways of doing this. Read more under <<Assets>>.
+The Starter includes two main ways of doing this. Read more under <<Assets>>.
 
-CAUTION: If you NEED Server-side Rendering (SSR), use {enonicReact4xp}[React4xp].
+TIP: If you need Server-side Rendering (SSR), use {enonicReact4xp}[React4xp].
 
 == Tools
 
 === Code completion
 
 When programming, it's very useful to get `code completion` and <<Type checking>> directly in the code editor.
-To enable this, IDE's will typically look for <<_tsconfig_json,tsconfig.json>> files. 
+To enable this, IDE will typically look for <<_tsconfig_json,tsconfig.json>> files.
 
 === Type checking
 
 In addition to `type checking` directly in the IDE, it's a good idea to make `type checking` part of the build process.
-In starter-tsup this is set up via `pre` statements in the scripts section of the package.json file. Type checking is currently skipped for development builds.
+In Tsup Starter this is set up via `check` statements in the scripts section of the `package.json` file. Type checking is currently skipped for development builds.
 
 The `check:types:*` scripts uses the same <<_tsconfig_json,tsconfig.json>> files as IDE's.
 
 === tsconfig.json
 
-starter-tsup comes with three `tsconfig.json` files:
+Tsup Starter comes with three `tsconfig.json` files:
 
 1. ${PROJECT_DIR}/tsconfig.json
 2. ${PROJECT_DIR}/src/main/resources/assets/tsconfig.json
 3. ${PROJECT_DIR}/src/main/resources/static/tsconfig.json
 
-The `tsconfig.json` file at the root of the project is used for all code processing (except the assets and static folders), and is configured to match the Enonic XP server-side runtime environment.
+The `tsconfig.json` file at the root of the project is used for all code processing (except the `assets` and `static` folders which are handled by their own), and is configured to match the Enonic XP server-side runtime environment.
 
-The two `tsconfig.json` files in assets and static, should be identical, and is configured for client-side runtime environment.
+The two `tsconfig.json` files in `assets` and `static` are identical and configured for client-side runtime environment.
 
-WARNING: Do NOT set target in the ${PROJECT_DIR}/tsconfig.json, it will probably break the build. Target should always be set to 'es5' in the ${PROJECT_DIR}/tsup/server.ts file.
+WARNING: Do NOT set target in the ${PROJECT_DIR}/tsconfig.json, it will probably break the build. Target should always be set to 'es5' in the `${PROJECT_DIR}/tsup/server.ts` file.
 
-TIP: Sometimes a folder may contain both code for the server-side and the client-side. Using different include and exclude lists in multiple `tsconfig.*.json` files makes it possible to configure strict type-checking for all code in those folders, to be run as part of the build process.
+TIP: Sometimes a folder may contain both code for the server-side and the client-side. Using different `include` and `exclude` lists in multiple `tsconfig.*.json` files makes it possible to configure strict type-checking for all code in those folders, to be run as part of the build process.
 
-CAUTION: It seems IDE's are only able to read a single `tsconfig.json` file per folder, so it's currently only possible to setup relaxed/permissive type checking when server and client side code is "mixed". Let us know if you discover a way to setup strict type-checking. 🙏
+It seems IDE's are only able to read a single `tsconfig.json` file per folder, so it's currently only possible to se tup relaxed/permissive type checking when server and client side code is "mixed". Let us know if you discover a way to set up strict type-checking. 🙏
 
 == Code Hierarchy
 
 === Admin
 
+Extensions of Admin UI are located in `src/main/resources/admin`.
+
 ==== Tool
 
-There is an exampleTool included in the starter.
+There is an admin tool called "Sample Tool" included in the Starter, located in `src/main/resources/admin/tools/tool`. When a project based on this starter is deployed, you will see it inside the XP menu.
+
+image::admin-tool-menu.png[Admin Tool menu, 50%]
+
+Click "Sample Tool" in the menu to open the tool.
+
+image::admin-tool.png[Admin Tool, 50%]
+
+What you see here is essentially a *React* app inside the Admin Tool. If you open browser console, you will see a log message there saying something like
+
+ react-dom.development-1B959UOCEC1QW.js:29850 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+
+ App.tsx:11 Hello from React inside an Admin Tool. React app id: {
+  "id": ":r0:"
+ }
+
+We have also added an example of importing an external Node module called *Day.js* which allows you to easily handle date/time operations.
+
+Both of these integrations (*React* and *Day.js*) can be found in `src/main/resources/static/admin/App.tsx`.
 
 ==== Widgets
 
 The starter includes examples for the following widget interfaces:
 
-* Context panel
-* Menuitem
-* Dahboard
+* Dashboard (src/main/resources/widgets/dashboard/)
+* Context panel (src/main/resources/widgets/contextPanel/)
+* Menu-item (src/main/resources/widgets/menuItem/)
+
+==== Dashboard
+
+The Dashboard widget (titled "Sample dashboard widget") will be shown on the XP Dashboard page when you log in into Admin console.
+
+image::widget-dashboard.png[Dashboard widget, 50%]
+
+IMPORTANT: The next two widgets are extensions of Content Studio, so you'll need to install it first.
+
+==== Menu item
+
+Content Studio has a menu on the left-hand side and this widget's icon will appear in this menu.
+
+image::widget-menu.png[Menu item widget, 50%]
+
+==== Context panel
+
+You'll find this widget inside the Context Panel on the right hand side of Content Studio's. This panel can be opened by clicking the burger icon under the XP menu icon.
+
+image::widget-context.png[Context panel widget, 50%]
+
+NOTE: The last two widgets are using inline styling, but you can define CSS styles in a stylesheet and plug it in the same way as it's done in the Dashboard widget (or have one stylesheet shared by all the widgets, depending on your architecture).
 
 === Assets
 
-starter-tsup provides two main ways of providing client-side assets:
+Tsup Starter provides examples for two main ways of serving client-side assets:
 
-1. Either from the `assets` folder via the <<Service, Assets service>>
-2. Or from the <<Static>> folder via <<Site Mappings>> or <<Webapp>> (even <<Admin>>)
+1. Either from the `assets` folder (`src/main/resources/assets`) via the <<Assets service>>
+2. Or from the <<Static>> folder (`src/main/resources/static`) via <<Site Mappings>> or <<Webapp>> (even <<Admin>>)
 
-TIP: We recommend using the <<Static>> folder, since it enables immuteable urls: Urls that can be cached "forever".
+TIP: We recommend using the <<Static>> folder, since it enables immutable urls - urls that can be cached "forever".
 
 ==== Assets service
 
-WARNING: Any files in the assets folder are PUBLICLY available to EVERYONE via the {enonicAssetService}[Assets service]. If you need some security, do NOT put files in the assets folder. Rather put them somewhere else, and write your own controllers, and implement some security.
+WARNING: Any files in the `assets` folder are PUBLICLY available to EVERYONE via the {enonicAssetService}[Assets service]. If you need some security, do NOT put files in the `assets` folder. Rather put them somewhere else, write your own controllers and implement some level of security.
 
-TIP: Any {enonicAssetUrl}[assetUrl] includes a build-id hash number. Which means, everytime you deploy a new build, the url changes. So even though the asset files are probably [red]#NOT changed#, they are still re-downloaded by the browser. Which is why we recommend using the <<Static>> folder instead.
+TIP: Any {enonicAssetUrl}[assetUrl] includes a built-in hash number. Which means, everytime you deploy a new build the url changes. So even though the asset files are probably [red]#NOT changed#, they are still re-downloaded by the browser. Which is why we recommend using the <<Static>> folder instead.
 
 ==== Static
 
-Files in the Static folder are not available via the <<Assets service>>. Instead they are made available via the {enonicLibStatic}[Static Assets Library].
+Files in the `static` folder are not available via the <<Assets service>>. Instead, they are made available via the {enonicLibStatic}[Static Assets Library].
 
-In order to enable immuteable urls, a contenthash is added to the files names at compile time. The contenthash is generated from the file content (and location) and only changes, if the content (or location) of the file changes. This means that the browser can cache the asset "forever", and everytime it encounters the url, it can simply load the asset from it's cache.
+In order to enable immutable urls, a content hash is added to the files names at compile time. The content hash is generated from the file content (and location) and only changes, if the content (or location) of the file changes. This means that the browser can cache the asset "forever", and every time it encounters the url, it can simply load the asset from the cache.
 
-Whenever you change a file, it will have a new contenthash, and thus a new url. In order for the browser to load the new url, the html repsonse from the server needs to provide the new url. This is made possible by a `manifest` file, which lists what the current contenthash is.
+Whenever you change a file, it will have a new content hash and thus a new url. In order for the browser to load the new url, the html response from the server needs to provide the new url. This is made possible with a `manifest` file, which contains mapping of original assets with their current content hash.
 
-There are many ways of serving the files from the Static folder to the browser. The starter contains examples on how it can be done.
+There are many ways of serving the files from the `static` folder to the browser. The Starter contains examples on how it can be done.
 
-If you are writing code inside the <<Site>> folder, we recommend using `/lib/getImmuteableSiteUrl`.
+If you are writing code inside the <<Site>> folder, we recommend using `/lib/getImmuteableUrl`.
 
 If you are writing code inside the <<Webapp>> folder, we recommend using `/webapp/getImmuteableWebappUrl`.
 
