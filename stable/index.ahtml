@@ -444,25 +444,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#create_project">2. Create project</a></li>
 <li><a href="#build_environment">3. Build environment</a>
 <ul class="sectlevel2">
-<li><a href="#enonic_cli">3.1. Enonic CLI</a></li>
-<li><a href="#gradle">3.2. Gradle</a>
+<li><a href="#gradle">3.1. Gradle</a>
 <ul class="sectlevel3">
-<li><a href="#version">3.2.1. Version</a></li>
-<li><a href="#upgrade">3.2.2. Upgrade</a></li>
+<li><a href="#version">3.1.1. Version</a></li>
+<li><a href="#upgrade">3.1.2. Upgrade</a></li>
 </ul>
 </li>
-<li><a href="#node">3.3. Node</a>
+<li><a href="#node">3.2. Node</a>
 <ul class="sectlevel3">
-<li><a href="#version_2">3.3.1. Version</a></li>
-<li><a href="#gradle_node_plugin">3.3.2. Gradle node plugin</a></li>
-<li><a href="#system_node">3.3.3. System Node</a></li>
+<li><a href="#version_2">3.2.1. Version</a></li>
+<li><a href="#gradle_node_plugin">3.2.2. Gradle node plugin</a></li>
+<li><a href="#system_node">3.2.3. System Node</a></li>
 </ul>
 </li>
-<li><a href="#incremental_build">3.4. Incremental build</a>
+<li><a href="#incremental_build">3.3. Incremental build</a>
 <ul class="sectlevel3">
-<li><a href="#continuous_build">3.4.1. Continuous build</a></li>
-<li><a href="#watch_mode">3.4.2. Watch mode</a></li>
-<li><a href="#dev_mode">3.4.3. DEV mode</a></li>
+<li><a href="#continuous_build">3.3.1. Continuous build</a></li>
+<li><a href="#watch_mode">3.3.2. Watch mode</a></li>
+<li><a href="#development_mode">3.3.3. Development mode</a></li>
 </ul>
 </li>
 </ul>
@@ -481,7 +480,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#installing">4.2.1. Installing</a></li>
 <li><a href="#bundling">4.2.2. Bundling</a></li>
 <li><a href="#polyfill_node">4.2.3. Polyfill Node</a></li>
-<li><a href="#the_global_object">4.2.4. The global object</a></li>
+<li><a href="#the_global_object">4.2.4. The Global object</a></li>
 <li><a href="#injection">4.2.5. Injection</a></li>
 <li><a href="#code_splitting">4.2.6. Code splitting</a></li>
 </ul>
@@ -508,6 +507,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#tool">7.1.1. Tool</a></li>
 <li><a href="#widgets">7.1.2. Widgets</a></li>
+<li><a href="#dashboard">7.1.3. Dashboard</a></li>
+<li><a href="#menu_item">7.1.4. Menu item</a></li>
+<li><a href="#context_panel">7.1.5. Context panel</a></li>
 </ul>
 </li>
 <li><a href="#assets">7.2. Assets</a>
@@ -543,19 +545,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="features"><a class="link" href="#features">1. Features</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Build:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
 <p>Typescript support</p>
 </li>
 <li>
-<p>Fast build times (tsup uses esbuild and swc)</p>
+<p>Fast build times (<code>tsup</code> uses <code>esbuild</code> and <code>swc</code>)</p>
 </li>
 <li>
-<p>Asyncronous (concurrent build targets)</p>
+<p>Asynchronous (concurrent build targets)</p>
 </li>
 <li>
-<p>Transpiling</p>
+<p>Transpilation (TypeScript to JS)</p>
 </li>
 <li>
 <p>Bundling</p>
@@ -571,18 +576,51 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Enonic XP APIs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Application (creation of virtual applications)</p>
+</li>
+<li>
+<p>Project (creation and deletion of content projects)</p>
+</li>
+<li>
+<p>Scheme (dynamic creation of content type schemas)</p>
+</li>
+<li>
+<p>Task (submitting and managing server-side tasks)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>UI:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Admin tool</p>
+</li>
+<li>
+<p>Widgets</p>
+</li>
+<li>
+<p>Page components</p>
+</li>
+<li>
+<p>Use of React</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="create_project"><a class="link" href="#create_project">2. Create project</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To setup a project locally, run the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project create -r starter-tsup</code></pre>
-</div>
+<p>To set up a project locally, you will need Enonic CLI.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -595,6 +633,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Once you have the CLI, run the following command to create a new Enonic project based on this starter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project create -r starter-tsup</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -602,32 +648,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="build_environment"><a class="link" href="#build_environment">3. Build environment</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="enonic_cli"><a class="link" href="#enonic_cli">3.1. Enonic CLI</a></h3>
+<h3 id="gradle"><a class="link" href="#gradle">3.1. Gradle</a></h3>
 <div class="paragraph">
-<p>The best way of working with Enonic XP projects is to use the Enonic CLI.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<strong>Don&#8217;t have the Enonic CLI?</strong> Visit the <a href="https://developer.enonic.com/start">Getting started guide</a> to install it.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="gradle"><a class="link" href="#gradle">3.2. Gradle</a></h3>
-<div class="paragraph">
-<p>We try to keep our starters up-to-date with the latest <a href="https://gradle.org/releases/">Gradle releases</a>.</p>
+<p>Enonic projects are typically built with Gradle and come with bundled Gradle wrapper which we aim to keep up-to-date with the latest <a href="https://gradle.org/releases/">Gradle releases</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="version"><a class="link" href="#version">3.2.1. Version</a></h4>
+<h4 id="version"><a class="link" href="#version">3.1.1. Version</a></h4>
 <div class="paragraph">
-<p>You can check which version of gradle is in use by issuing this command:</p>
+<p>You can check which version of Gradle wrapper your project is using by issuing this command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -636,9 +664,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect3">
-<h4 id="upgrade"><a class="link" href="#upgrade">3.2.2. Upgrade</a></h4>
+<h4 id="upgrade"><a class="link" href="#upgrade">3.1.2. Upgrade</a></h4>
 <div class="paragraph">
-<p>You can upgrade your gradle wrapper by issuing this command:</p>
+<p>You can upgrade your Gradle wrapper by issuing this command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -651,9 +679,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="node"><a class="link" href="#node">3.3. Node</a></h3>
+<h3 id="node"><a class="link" href="#node">3.2. Node</a></h3>
 <div class="sect3">
-<h4 id="version_2"><a class="link" href="#version_2">3.3.1. Version</a></h4>
+<h4 id="version_2"><a class="link" href="#version_2">3.2.1. Version</a></h4>
+<div class="paragraph">
+<p>We suggest to keep your project on the latest LTS version of Node, which can be found <a href="https://nodejs.org/en/download/releases">here</a>.</p>
+</div>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -661,22 +692,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Some node modules doesn&#8217;t support the newest versions of Node (yet).
+Some node modules don&#8217;t support the newest versions of Node (yet). In this case you might get build warnings or even errors. This can typically be solved by downgrading Node again or verifying (in <code>package.json</code>) whether version of the problematic module is outdated.
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>For example the <code>node-sass</code> currently doesn&#8217;t support Node version newer than 16.</p>
-</div>
 </div>
 <div class="sect3">
-<h4 id="gradle_node_plugin"><a class="link" href="#gradle_node_plugin">3.3.2. Gradle node plugin</a></h4>
+<h4 id="gradle_node_plugin"><a class="link" href="#gradle_node_plugin">3.2.2. Gradle node plugin</a></h4>
 <div class="paragraph">
-<p>The tsup-starter uses the <a href="https://github.com/node-gradle/gradle-node-plugin">Gradle node plugin</a>.</p>
-</div>
-<div class="paragraph">
-<p>The gradle node plugins is loaded like this:</p>
+<p>The Tsup Starter uses the <a href="https://github.com/node-gradle/gradle-node-plugin">Gradle node plugin</a>, which is defined like this:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -687,7 +712,7 @@ Some node modules doesn&#8217;t support the newest versions of Node (yet).
 </div>
 </div>
 <div class="paragraph">
-<p>And configured like this:</p>
+<p>and configured like this:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -701,26 +726,26 @@ Some node modules doesn&#8217;t support the newest versions of Node (yet).
 
 	// Version of node to download and install (only used if download is true)
 	// It will be unpacked in the workDir
-	version = "16.20.0"
+	version = "18.17.1"
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Any gradle task that runs scripts in node should depend on npmInstall:</p>
+<p>Any Gradle task that runs scripts in Node should depend on <code>npmInstall</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
-<pre class="highlight"><code class="language-gradle" data-lang="gradle">task myTask(type: NpmTask) {
+<pre class="highlight"><code class="language-gradle" data-lang="gradle">task.register('myTask', NpmTask) {
     dependsOn npmInstall
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="system_node"><a class="link" href="#system_node">3.3.3. System Node</a></h4>
+<h4 id="system_node"><a class="link" href="#system_node">3.2.3. System Node</a></h4>
 <div class="paragraph">
-<p>Sometimes you want to run node scripts directly (not via gradle). For example when running Enonic XP in <a href="#DEV mode (watch)">[DEV mode (watch)]</a>.</p>
+<p>Sometimes you want to run node scripts directly (not via Gradle). For example, to run Enonic XP in the <a href="#watch_mode">Watch mode</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -743,18 +768,18 @@ Some node modules doesn&#8217;t support the newest versions of Node (yet).
 </div>
 </div>
 <div class="paragraph">
-<p>It will use the version contained in the ./.nvmrc file:</p>
+<p>It will use the version specified in the <code>.nvmrc</code> file:</p>
 </div>
 <div class="listingblock">
 <div class="title">.nvmrc</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">16.20.0</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">18.17.1</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="incremental_build"><a class="link" href="#incremental_build">3.4. Incremental build</a></h3>
+<h3 id="incremental_build"><a class="link" href="#incremental_build">3.3. Incremental build</a></h3>
 <div class="quoteblock">
 <blockquote>
 An important part of any build tool is the ability to avoid doing work that has already been done.
@@ -764,9 +789,9 @@ An important part of any build tool is the ability to avoid doing work that has 
 </div>
 </div>
 <div class="sect3">
-<h4 id="continuous_build"><a class="link" href="#continuous_build">3.4.1. Continuous build</a></h4>
+<h4 id="continuous_build"><a class="link" href="#continuous_build">3.3.1. Continuous build</a></h4>
 <div class="paragraph">
-<p>Gradle does support <a href="https://docs.gradle.org/current/userguide/incremental_build.html">incremental build</a>, but due to reasons I will explain: using gradle in <a href="https://docs.gradle.org/current/userguide/incremental_build.html#sec:task_input_output_continuous_build">continuous mode</a> is NOT the most efficient option. Gradle can detect file changes, but it doesn&#8217;t know much about the dependency tree of javascript files, aka which other files needs to be recompiled once a single javascript file is changed. Gradle will simply rebuild "everything" by calling:</p>
+<p>Gradle does support <a href="https://docs.gradle.org/current/userguide/incremental_build.html">incremental build</a>, but using the <a href="https://docs.gradle.org/current/userguide/incremental_build.html#sec:task_input_output_continuous_build">continuous mode</a> is NOT the most efficient option. Gradle can detect file changes, but it doesn&#8217;t know much about the dependency tree of JavaScript files, i.e. which other files need to be recompiled once a single JavaScript file is changed. Gradle will simply rebuild "everything" by calling:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -774,13 +799,18 @@ An important part of any build tool is the ability to avoid doing work that has 
 </div>
 </div>
 <div class="paragraph">
-<p>tsup/esbuild doesn&#8217;t support filesystem caching, like <a href="https://webpack.js.org/configuration/cache/">Webpack</a>, but they do support <a href="https://tsup.egoist.dev/#watch-mode">watch mode</a>.</p>
+<p>Tsup/esbuild doesn&#8217;t support filesystem caching, like <a href="https://webpack.js.org/configuration/cache/">Webpack</a>, but they do support <a href="https://tsup.egoist.dev/#watch-mode">watch mode</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="watch_mode"><a class="link" href="#watch_mode">3.4.2. Watch mode</a></h4>
+<h4 id="watch_mode"><a class="link" href="#watch_mode">3.3.2. Watch mode</a></h4>
 <div class="paragraph">
-<p>Tsup will watch files for changes and only recompile that file, and any files that depend on that file, and files that depend on them, and so on&#8230;&#8203;, but nothing else, aka the minimal amout of recompilation for a "complete" build.</p>
+<p>Tsup will watch files for changes and only recompile that file, and any files that depend on that file, and files that depend on them, and so on&#8230;&#8203;, but nothing else, i.e. the minimal amount of recompilation for a "complete" build. To make Tsup Starter "hot reload" client-side assets, execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">npm run watch</code></pre>
+</div>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -789,7 +819,7 @@ An important part of any build tool is the ability to avoid doing work that has 
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-However this does NOT produce a jar file, which is what Enonic XP requires to deploy apps.
+However, this does <strong>not</strong> produce a jar file, which is what Enonic XP requires to deploy apps.
 </td>
 </tr>
 </table>
@@ -801,16 +831,16 @@ However this does NOT produce a jar file, which is what Enonic XP requires to de
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-To run new code WITHOUT redeploying an app, start the Enonic XP distribution in DEV mode.
+To run new code <strong>without</strong> redeploying an app, start the Enonic XP distribution in Development mode (by passing <code>--dev</code> argument to CLI command when starting an Enonic sandbox or deploying a project), then start the project in watch mode with the command above.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="dev_mode"><a class="link" href="#dev_mode">3.4.3. DEV mode</a></h4>
+<h4 id="development_mode"><a class="link" href="#development_mode">3.3.3. Development mode</a></h4>
 <div class="paragraph">
-<p>Enonic XP can be run in a special mode known as <a href="https://developer.enonic.com/docs/xp/stable/apps/build-system#development_mode">development mode</a>. In this mode, XP will read files directly from their source locations (<code>build/resources/main</code>, and even <code>src/main/resources</code>).</p>
+<p>Enonic XP can be run in a special mode known as <a href="https://developer.enonic.com/docs/xp/stable/apps/build-system#development_mode">Development mode</a>. In this mode, XP will read files directly from their source locations (<code>build/resources/main</code>, and even <code>src/main/resources</code>).</p>
 </div>
 <div class="admonitionblock caution">
 <table>
@@ -819,19 +849,7 @@ To run new code WITHOUT redeploying an app, start the Enonic XP distribution in 
 <i class="fa icon-caution" title="Caution"></i>
 </td>
 <td class="content">
-In order for this to work Enonic XP needs to know, where those folders are. That information is contained within the jar file. So you need to make an initial deployment of your application jar file, and whenever you move your code tree on your file system.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-Enonic XP will "fallback" to the jar file, if a file is not found in it&#8217;s source locations. So when you delete a source file, it is probably a good idea to do a full build and redeploy a fresh jar file without the deleted file.
+In order for this to work, Enonic XP needs to know where those folders are. That information is contained within the app&#8217;s jar file. So you need to make an initial deployment of your jar file, or whenever you rearrange files in your project. Enonic XP will "fall back" to the jar file, if a file is not found in its source location. So when you delete a source file, it is probably a good idea to do a full build and redeploy a fresh jar file without the deleted file.
 </td>
 </tr>
 </table>
@@ -847,7 +865,7 @@ Enonic XP will "fallback" to the jar file, if a file is not found in it&#8217;s 
 <p>The JavaScript ecosystem is advancing rapidly, using more and more modern features, which typically isn&#8217;t supported everywhere (yet).</p>
 </div>
 <div class="paragraph">
-<p>In order to use modern features, transpilers are used to convert modern code into more stable versions of ECMAScript, and polyfills are used to provide API&#8217;s which are not present in the runtime environment.</p>
+<p>In order to use modern features, transpilers are used to convert modern code into more stable versions of ECMAScript, and polyfills are used to provide APIs which are not present in the runtime environment.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -856,7 +874,7 @@ Enonic XP will "fallback" to the jar file, if a file is not found in it&#8217;s 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Currently the Enonic XP JavaScript framework only has limited <code>ECAMScript 6/2015</code> support and only support the <code>CommonJS module</code> (CJS) format.
+Currently, Enonic XP JavaScript framework only has limited <code>ECAMScript 6/2015</code> support and supports only the <code>CommonJS module</code> (CJS) format.
 </td>
 </tr>
 </table>
@@ -864,12 +882,12 @@ Currently the Enonic XP JavaScript framework only has limited <code>ECAMScript 6
 <div class="sect2">
 <h3 id="java_libraries"><a class="link" href="#java_libraries">4.1. Java libraries</a></h3>
 <div class="paragraph">
-<p>In order to use Enonic XP java libraries in your code, there are some steps required:</p>
+<p>In order to use Enonic XP <strong>Java</strong> API libraries in your code, the following steps are required:</p>
 </div>
 <div class="sect3">
 <h4 id="include"><a class="link" href="#include">4.1.1. Include</a></h4>
 <div class="paragraph">
-<p>Include the java library in</p>
+<p>Include a Java library in your <code>build.gradle</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
@@ -883,10 +901,10 @@ Currently the Enonic XP JavaScript framework only has limited <code>ECAMScript 6
 <div class="sect3">
 <h4 id="externals"><a class="link" href="#externals">4.1.2. Externals</a></h4>
 <div class="paragraph">
-<p>The java library jar file typically contain a CJS wrapper which is required at runtime.</p>
+<p>Jar file of a Java library typically contains a CJS wrapper which is required at runtime.</p>
 </div>
 <div class="paragraph">
-<p>The contents of the jar file is NOT available at compile time, so it cannot be bundled. Instead we tell the transpiler to treat the library import path as an external (expecting it to exist at runtime).</p>
+<p>The contents of the jar file is NOT available at compile time, so it cannot be bundled. Instead, we tell the transpiler to treat the library import path as an external (expecting it to exist at runtime).</p>
 </div>
 <div class="listingblock">
 <div class="title">/tsup/server.ts</div>
@@ -924,7 +942,7 @@ export function get() {
 <div class="sect3">
 <h4 id="installing"><a class="link" href="#installing">4.2.1. Installing</a></h4>
 <div class="paragraph">
-<p>You can use the following command to install a node module you want to use:</p>
+<p>You can use the following command to install a node module you want to use (for example, <code>sha.js</code>):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -932,37 +950,16 @@ export function get() {
 </div>
 </div>
 <div class="paragraph">
-<p>This will add <code>sha.js</code> under dependencies in the package.json file, and download and extract the package into node_modules/sha.js/</p>
+<p>This will add <code>sha.js</code> under dependencies in the <code>package.json</code> file, and download and extract the package into <code>node_modules</code> folder of your project.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="bundling"><a class="link" href="#bundling">4.2.2. Bundling</a></h4>
 <div class="paragraph">
-<p>By default starer-tsup bundles all imported modules <a href="https://tsup.egoist.dev/#excluding-packages">EXCEPT</a> dependencies and peerDependencies.</p>
+<p>By default, Tsup starter bundles all imported modules <a href="https://tsup.egoist.dev/#excluding-packages">EXCEPT</a> dependencies and peerDependencies. Since sha.js (in the example above) is added as a dependency, it will <span class="red">NOT</span> be bundled!</p>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Since sha.js is listed under dependencies, it will <span class="red">NOT</span> be bundled!
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-To fix that we have to list it under noExternals:
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>To fix that we have to list it under <code>noExternals</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">/tsup/server.ts</div>
@@ -982,13 +979,13 @@ To fix that we have to list it under noExternals:
 <i class="fa icon-caution" title="Caution"></i>
 </td>
 <td class="content">
-Node modules are typically run in Node, and thus expect Node API&#8217;s to be present, which is not always the case.
+Node modules are typically run in Node, and thus expect Node APIs to be present, which is not always the case.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>For example the <code>sha.js</code> module expects buffer to exist in the global scope, but it does NOT in the Enonic XP JavaScript framework runtime environment.</p>
+<p>For example, the <code>sha.js</code> module expects buffer to exist in the global scope, but it does NOT exist in the Enonic XP JavaScript framework runtime environment.</p>
 </div>
 <div class="paragraph">
 <p>We can use <a href="https://www.npmjs.com/package/esbuild-plugin-polyfill-node">esbuild-plugin-polyfill-node</a> to selectively polyfill only the parts of Node that is used by the node module:</p>
@@ -1012,18 +1009,18 @@ esbuildPlugins: [
 </div>
 </div>
 <div class="sect3">
-<h4 id="the_global_object"><a class="link" href="#the_global_object">4.2.4. The global object</a></h4>
+<h4 id="the_global_object"><a class="link" href="#the_global_object">4.2.4. The Global object</a></h4>
 <div class="paragraph">
-<p>Different JavaScript runtime environments have different properties on their <a href="https://developer.mozilla.org/en-US/docs/Glossary/Global_object">global object</a></p>
+<p>Different JavaScript runtime environments have different properties on their <a href="https://developer.mozilla.org/en-US/docs/Glossary/Global_object">Global object</a></p>
 </div>
 <div class="paragraph">
-<p>In addition they even have different ways of accessing the global object.</p>
+<p>In addition, they even have different ways of accessing the Global object.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://262.ecma-international.org/11.0/#sec-globalthis">globalThis</a>, introduced in ES2020 aims to consolidate the increasingly fragmented ways of accessing the global object.</p>
+<p><a href="https://262.ecma-international.org/11.0/#sec-globalthis">globalThis</a>, introduced in ES2020 aims to consolidate the increasingly fragmented ways of accessing the Global object.</p>
 </div>
 <div class="paragraph">
-<p>Some node modules support multiple runtime environments, and uses the properties on the global object to determine what runtime environment the code is running under.</p>
+<p>Some node modules support multiple runtime environments, and use the properties of the Global object to determine what runtime environment the code is running in.</p>
 </div>
 <div class="admonitionblock caution">
 <table>
@@ -1032,47 +1029,16 @@ esbuildPlugins: [
 <i class="fa icon-caution" title="Caution"></i>
 </td>
 <td class="content">
-One might be tempted to polyfill all the ways of accessing the global object, but that will typically break node modules that are trying to detect the runtime environment.
+One might be tempted to polyfill all the ways of accessing the Global object, but that will typically break node modules that are trying to detect the runtime environment.
 </td>
 </tr>
 </table>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-To make matters worse, some of the polyfills themselves expect things to be a certain way.
-For example the polyfilling of buffer only works if it can apply itself on the globals object.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>To make matters worse, some of the polyfills themselves expect things to be a certain way.</p>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-In the Enonic XP JavaScript framework, each controller run in it&#8217;s own "sandbox" environment, so there really isn&#8217;t a global object, there is rather a controller scope "local" object.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-In order for the buffer polyfill to work we can simply make a globalThis point to the controller scope:
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>For example, polyfilling of buffer only works if it can apply itself on the Global object. In the Enonic XP JavaScript framework, each controller runs in its own "sandbox" environment, so there really isn&#8217;t a Global object, there is rather a controller scope "local" object. In order for the buffer polyfill to work we can simply make <code>globalThis</code> point to the controller scope:</p>
 </div>
 <div class="listingblock">
 <div class="title">/tsup/server.ts</div>
@@ -1124,7 +1090,7 @@ But if you are using <code>the function</code> all over the place, you can use i
 <i class="fa icon-caution" title="Caution"></i>
 </td>
 <td class="content">
-Everthing you add via imports, polyfills, banners, injections, etc increases the size of the resources which need to be loaded into memory at runtime. The more you add, the longer the warmup time becomes.
+Everything you add via imports, polyfills, banners, injections, etc increases the size of the resources which need to be loaded into memory at runtime. The more you add, the longer the warmup time becomes.
 </td>
 </tr>
 </table>
@@ -1133,7 +1099,7 @@ Everthing you add via imports, polyfills, banners, injections, etc increases the
 <p>In order to avoid loading the same code multiple times, shared code is split into chunk files, which are only loaded once, but can be used many times via require in the JavaScript controllers.</p>
 </div>
 <div class="paragraph">
-<p>It sorta like all the shared code exists in the global scope and don&#8217;t need to be loaded.</p>
+<p>It&#8217;s sort of like all the shared code exists in the global scope and don&#8217;t need to be loaded.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -1163,7 +1129,7 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 <p>When it comes to files autogenerated by a build system, for example chunk files, they also need their own "namespace".</p>
 </div>
 <div class="paragraph">
-<p>In starter-tsup we can "namespace" it&#8217;s chunks like this:</p>
+<p>In Tsup Starter we can "name space" its chunks like this:</p>
 </div>
 <div class="listingblock">
 <div class="title">/tsup/server.ts</div>
@@ -1178,13 +1144,13 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 <div class="sect2">
 <h3 id="tree_shaking"><a class="link" href="#tree_shaking">4.3. Tree-shaking</a></h3>
 <div class="paragraph">
-<p>The tools that supports tree-shaking typically only work with the <code>ECMAScript module</code> (ESM) format.</p>
+<p>Tree shaking refers to the process of eliminating or "shaking off" dead code or unused code from the final bundled output. Tools that support tree-shaking typically only work with the <code>ECMAScript module</code> (ESM) format.</p>
 </div>
 <div class="paragraph">
-<p>starter-tsup uses esbuild to transpile the sources into ESM so that tree-shaking can be applied.</p>
+<p>Tsup Starter uses <code>esbuild</code> to transpile sources into ESM so that tree-shaking can be applied.</p>
 </div>
 <div class="paragraph">
-<p>Then it uses swc to transpile the code back to CJS (the format supported by Enonic XP JavaScript framework).</p>
+<p>Then it uses <code>swc</code> to transpile the code back to CJS (the format supported by Enonic XP JavaScript framework).</p>
 </div>
 </div>
 </div>
@@ -1193,10 +1159,10 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 <h2 id="client_side"><a class="link" href="#client_side">5. Client-side</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Client-side and server-side are web development terms that describe where application code runs.</p>
+<p>Client-side and Server-side are web development terms that describe where application code runs.</p>
 </div>
 <div class="paragraph">
-<p>When people talk about "the client-side", they typically just mean THEIR web browser, not considering other <a href="https://developer.mozilla.org/en-US/docs/Glossary/User_agent">User-Agents</a> like bots/robots/web-crawlers, headless browsers, legacy browsers or even other modern browser alternatives :)</p>
+<p>When people talk about "the client-side", they typically just mean their web browser, not considering other <a href="https://developer.mozilla.org/en-US/docs/Glossary/User_agent">User-Agents</a> like bots/robots/web-crawlers, headless browsers, legacy browsers or even other modern browser alternatives :)</p>
 </div>
 <div class="paragraph">
 <p>In the context of build systems, the source code is processed in different ways, depending upon which <code>target plarform</code> the code is supposed to run on.</p>
@@ -1210,7 +1176,7 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 <p>The most common way is to use the <a href="#assets">Assets</a> folder.</p>
 </li>
 <li>
-<p>This can be improved upon by using <a href="#static">lib-static</a>.</p>
+<p>It can be improved upon by using <a href="#static">lib-static</a>.</p>
 </li>
 <li>
 <p>It can be provided by <a href="#services">Services</a>, <a href="#site_mappings">Site Mappings</a>, <a href="#webapp">Webapp</a>, or <a href="#admin">Admin</a>.</p>
@@ -1238,19 +1204,19 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 <div class="sect2">
 <h3 id="react"><a class="link" href="#react">5.2. React</a></h3>
 <div class="paragraph">
-<p>starter-tsup is able to transpile React TSX/JSX source files into JavaScript code for the browser.</p>
+<p>Tsup Starter is able to transpile React TSX/JSX source files into JavaScript code for the browser.</p>
 </div>
 <div class="paragraph">
-<p>The starter includes two main ways of doing this. Read more under <a href="#assets">Assets</a>.</p>
+<p>The Starter includes two main ways of doing this. Read more under <a href="#assets">Assets</a>.</p>
 </div>
-<div class="admonitionblock caution">
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you NEED Server-side Rendering (SSR), use <a href="https://developer.enonic.com/docs/react4xp/">React4xp</a>.
+If you need Server-side Rendering (SSR), use <a href="https://developer.enonic.com/docs/react4xp/">React4xp</a>.
 </td>
 </tr>
 </table>
@@ -1265,14 +1231,14 @@ If you NEED Server-side Rendering (SSR), use <a href="https://developer.enonic.c
 <h3 id="code_completion"><a class="link" href="#code_completion">6.1. Code completion</a></h3>
 <div class="paragraph">
 <p>When programming, it&#8217;s very useful to get <code>code completion</code> and <a href="#type_checking">Type checking</a> directly in the code editor.
-To enable this, IDE&#8217;s will typically look for <a href="#_tsconfig_json">tsconfig.json</a> files.</p>
+To enable this, IDE will typically look for <a href="#_tsconfig_json">tsconfig.json</a> files.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="type_checking"><a class="link" href="#type_checking">6.2. Type checking</a></h3>
 <div class="paragraph">
 <p>In addition to <code>type checking</code> directly in the IDE, it&#8217;s a good idea to make <code>type checking</code> part of the build process.
-In starter-tsup this is set up via <code>pre</code> statements in the scripts section of the package.json file. Type checking is currently skipped for development builds.</p>
+In Tsup Starter this is set up via <code>check</code> statements in the scripts section of the <code>package.json</code> file. Type checking is currently skipped for development builds.</p>
 </div>
 <div class="paragraph">
 <p>The <code>check:types:*</code> scripts uses the same <a href="#_tsconfig_json">tsconfig.json</a> files as IDE&#8217;s.</p>
@@ -1281,7 +1247,7 @@ In starter-tsup this is set up via <code>pre</code> statements in the scripts se
 <div class="sect2">
 <h3 id="tsconfig_json"><a class="link" href="#tsconfig_json">6.3. tsconfig.json</a></h3>
 <div class="paragraph">
-<p>starter-tsup comes with three <code>tsconfig.json</code> files:</p>
+<p>Tsup Starter comes with three <code>tsconfig.json</code> files:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1297,10 +1263,10 @@ In starter-tsup this is set up via <code>pre</code> statements in the scripts se
 </ol>
 </div>
 <div class="paragraph">
-<p>The <code>tsconfig.json</code> file at the root of the project is used for all code processing (except the assets and static folders), and is configured to match the Enonic XP server-side runtime environment.</p>
+<p>The <code>tsconfig.json</code> file at the root of the project is used for all code processing (except the <code>assets</code> and <code>static</code> folders which are handled by their own), and is configured to match the Enonic XP server-side runtime environment.</p>
 </div>
 <div class="paragraph">
-<p>The two <code>tsconfig.json</code> files in assets and static, should be identical, and is configured for client-side runtime environment.</p>
+<p>The two <code>tsconfig.json</code> files in <code>assets</code> and <code>static</code> are identical and configured for client-side runtime environment.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -1309,7 +1275,7 @@ In starter-tsup this is set up via <code>pre</code> statements in the scripts se
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Do NOT set target in the ${PROJECT_DIR}/tsconfig.json, it will probably break the build. Target should always be set to 'es5' in the ${PROJECT_DIR}/tsup/server.ts file.
+Do NOT set target in the ${PROJECT_DIR}/tsconfig.json, it will probably break the build. Target should always be set to 'es5' in the <code>${PROJECT_DIR}/tsup/server.ts</code> file.
 </td>
 </tr>
 </table>
@@ -1321,22 +1287,13 @@ Do NOT set target in the ${PROJECT_DIR}/tsconfig.json, it will probably break th
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Sometimes a folder may contain both code for the server-side and the client-side. Using different include and exclude lists in multiple <code>tsconfig.*.json</code> files makes it possible to configure strict type-checking for all code in those folders, to be run as part of the build process.
+Sometimes a folder may contain both code for the server-side and the client-side. Using different <code>include</code> and <code>exclude</code> lists in multiple <code>tsconfig.*.json</code> files makes it possible to configure strict type-checking for all code in those folders, to be run as part of the build process.
 </td>
 </tr>
 </table>
 </div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-It seems IDE&#8217;s are only able to read a single <code>tsconfig.json</code> file per folder, so it&#8217;s currently only possible to setup relaxed/permissive type checking when server and client side code is "mixed". Let us know if you discover a way to setup strict type-checking. 🙏
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>It seems IDE&#8217;s are only able to read a single <code>tsconfig.json</code> file per folder, so it&#8217;s currently only possible to se tup relaxed/permissive type checking when server and client side code is "mixed". Let us know if you discover a way to set up strict type-checking. 🙏</p>
 </div>
 </div>
 </div>
@@ -1346,10 +1303,47 @@ It seems IDE&#8217;s are only able to read a single <code>tsconfig.json</code> f
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="admin"><a class="link" href="#admin">7.1. Admin</a></h3>
+<div class="paragraph">
+<p>Extensions of Admin UI are located in <code>src/main/resources/admin</code>.</p>
+</div>
 <div class="sect3">
 <h4 id="tool"><a class="link" href="#tool">7.1.1. Tool</a></h4>
 <div class="paragraph">
-<p>There is an exampleTool included in the starter.</p>
+<p>There is an admin tool called "Sample Tool" included in the Starter, located in <code>src/main/resources/admin/tools/tool</code>. When a project based on this starter is deployed, you will see it inside the XP menu.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/admin-tool-menu.png" alt="Admin Tool menu" width="50%">
+</div>
+</div>
+<div class="paragraph">
+<p>Click "Sample Tool" in the menu to open the tool.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/admin-tool.png" alt="Admin Tool" width="50%">
+</div>
+</div>
+<div class="paragraph">
+<p>What you see here is essentially a <strong>React</strong> app inside the Admin Tool. If you open browser console, you will see a log message there saying something like</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>react-dom.development-1B959UOCEC1QW.js:29850 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>App.tsx:11 Hello from React inside an Admin Tool. React app id: {
+ "id": ":r0:"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We have also added an example of importing an external Node module called <strong>Day.js</strong> which allows you to easily handle date/time operations.</p>
+</div>
+<div class="paragraph">
+<p>Both of these integrations (<strong>React</strong> and <strong>Day.js</strong>) can be found in <code>src/main/resources/static/admin/App.tsx</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1360,30 +1354,87 @@ It seems IDE&#8217;s are only able to read a single <code>tsconfig.json</code> f
 <div class="ulist">
 <ul>
 <li>
-<p>Context panel</p>
+<p>Dashboard (src/main/resources/widgets/dashboard/)</p>
 </li>
 <li>
-<p>Menuitem</p>
+<p>Context panel (src/main/resources/widgets/contextPanel/)</p>
 </li>
 <li>
-<p>Dahboard</p>
+<p>Menu-item (src/main/resources/widgets/menuItem/)</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="dashboard"><a class="link" href="#dashboard">7.1.3. Dashboard</a></h4>
+<div class="paragraph">
+<p>The Dashboard widget (titled "Sample dashboard widget") will be shown on the XP Dashboard page when you log in into Admin console.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/widget-dashboard.png" alt="Dashboard widget" width="50%">
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The next two widgets are extensions of Content Studio, so you&#8217;ll need to install it first.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="menu_item"><a class="link" href="#menu_item">7.1.4. Menu item</a></h4>
+<div class="paragraph">
+<p>Content Studio has a menu on the left-hand side and this widget&#8217;s icon will appear in this menu.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/widget-menu.png" alt="Menu item widget" width="50%">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="context_panel"><a class="link" href="#context_panel">7.1.5. Context panel</a></h4>
+<div class="paragraph">
+<p>You&#8217;ll find this widget inside the Context Panel on the right hand side of Content Studio&#8217;s. This panel can be opened by clicking the burger icon under the XP menu icon.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/widget-context.png" alt="Context panel widget" width="50%">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The last two widgets are using inline styling, but you can define CSS styles in a stylesheet and plug it in the same way as it&#8217;s done in the Dashboard widget (or have one stylesheet shared by all the widgets, depending on your architecture).
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="assets"><a class="link" href="#assets">7.2. Assets</a></h3>
 <div class="paragraph">
-<p>starter-tsup provides two main ways of providing client-side assets:</p>
+<p>Tsup Starter provides examples for two main ways of serving client-side assets:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Either from the <code>assets</code> folder via the <a href="#Service">Assets service</a></p>
+<p>Either from the <code>assets</code> folder (<code>src/main/resources/assets</code>) via the <a href="#assets_service">Assets service</a></p>
 </li>
 <li>
-<p>Or from the <a href="#static">Static</a> folder via <a href="#site_mappings">Site Mappings</a> or <a href="#webapp">Webapp</a> (even <a href="#admin">Admin</a>)</p>
+<p>Or from the <a href="#static">Static</a> folder (<code>src/main/resources/static</code>) via <a href="#site_mappings">Site Mappings</a> or <a href="#webapp">Webapp</a> (even <a href="#admin">Admin</a>)</p>
 </li>
 </ol>
 </div>
@@ -1394,7 +1445,7 @@ It seems IDE&#8217;s are only able to read a single <code>tsconfig.json</code> f
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-We recommend using the <a href="#static">Static</a> folder, since it enables immuteable urls: Urls that can be cached "forever".
+We recommend using the <a href="#static">Static</a> folder, since it enables immutable urls - urls that can be cached "forever".
 </td>
 </tr>
 </table>
@@ -1408,7 +1459,7 @@ We recommend using the <a href="#static">Static</a> folder, since it enables imm
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Any files in the assets folder are PUBLICLY available to EVERYONE via the <a href="https://developer.enonic.com/docs/xp/stable/runtime/engines/asset-service">Assets service</a>. If you need some security, do NOT put files in the assets folder. Rather put them somewhere else, and write your own controllers, and implement some security.
+Any files in the <code>assets</code> folder are PUBLICLY available to EVERYONE via the <a href="https://developer.enonic.com/docs/xp/stable/runtime/engines/asset-service">Assets service</a>. If you need some security, do NOT put files in the <code>assets</code> folder. Rather put them somewhere else, write your own controllers and implement some level of security.
 </td>
 </tr>
 </table>
@@ -1420,7 +1471,7 @@ Any files in the assets folder are PUBLICLY available to EVERYONE via the <a hre
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Any <a href="https://developer.enonic.com/docs/xp/stable/api/lib-portal#asseturl">assetUrl</a> includes a build-id hash number. Which means, everytime you deploy a new build, the url changes. So even though the asset files are probably <span class="red">NOT changed</span>, they are still re-downloaded by the browser. Which is why we recommend using the <a href="#static">Static</a> folder instead.
+Any <a href="https://developer.enonic.com/docs/xp/stable/api/lib-portal#asseturl">assetUrl</a> includes a built-in hash number. Which means, everytime you deploy a new build the url changes. So even though the asset files are probably <span class="red">NOT changed</span>, they are still re-downloaded by the browser. Which is why we recommend using the <a href="#static">Static</a> folder instead.
 </td>
 </tr>
 </table>
@@ -1429,19 +1480,19 @@ Any <a href="https://developer.enonic.com/docs/xp/stable/api/lib-portal#asseturl
 <div class="sect3">
 <h4 id="static"><a class="link" href="#static">7.2.2. Static</a></h4>
 <div class="paragraph">
-<p>Files in the Static folder are not available via the <a href="#assets_service">Assets service</a>. Instead they are made available via the <a href="https://developer.enonic.com/docs/static-asset-lib/master">Static Assets Library</a>.</p>
+<p>Files in the <code>static</code> folder are not available via the <a href="#assets_service">Assets service</a>. Instead, they are made available via the <a href="https://developer.enonic.com/docs/static-asset-lib/master">Static Assets Library</a>.</p>
 </div>
 <div class="paragraph">
-<p>In order to enable immuteable urls, a contenthash is added to the files names at compile time. The contenthash is generated from the file content (and location) and only changes, if the content (or location) of the file changes. This means that the browser can cache the asset "forever", and everytime it encounters the url, it can simply load the asset from it&#8217;s cache.</p>
+<p>In order to enable immutable urls, a content hash is added to the files names at compile time. The content hash is generated from the file content (and location) and only changes, if the content (or location) of the file changes. This means that the browser can cache the asset "forever", and every time it encounters the url, it can simply load the asset from the cache.</p>
 </div>
 <div class="paragraph">
-<p>Whenever you change a file, it will have a new contenthash, and thus a new url. In order for the browser to load the new url, the html repsonse from the server needs to provide the new url. This is made possible by a <code>manifest</code> file, which lists what the current contenthash is.</p>
+<p>Whenever you change a file, it will have a new content hash and thus a new url. In order for the browser to load the new url, the html response from the server needs to provide the new url. This is made possible with a <code>manifest</code> file, which contains mapping of original assets with their current content hash.</p>
 </div>
 <div class="paragraph">
-<p>There are many ways of serving the files from the Static folder to the browser. The starter contains examples on how it can be done.</p>
+<p>There are many ways of serving the files from the <code>static</code> folder to the browser. The Starter contains examples on how it can be done.</p>
 </div>
 <div class="paragraph">
-<p>If you are writing code inside the <a href="#site">Site</a> folder, we recommend using <code>/lib/getImmuteableSiteUrl</code>.</p>
+<p>If you are writing code inside the <a href="#site">Site</a> folder, we recommend using <code>/lib/getImmuteableUrl</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you are writing code inside the <a href="#webapp">Webapp</a> folder, we recommend using <code>/webapp/getImmuteableWebappUrl</code>.</p>
@@ -1522,7 +1573,7 @@ Any <a href="https://developer.enonic.com/docs/xp/stable/api/lib-portal#asseturl
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-15 12:45:59 UTC
+Last updated 2023-08-18 12:32:58 UTC
 </div>
 </div>
 </body>
