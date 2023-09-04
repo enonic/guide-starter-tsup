@@ -377,23 +377,21 @@ return {
 
 Then in the code we're using the `BROWSER_SYNC_PORT` environment variable via `process.env`:
 
-./src/main/resources/site/processors/browserSync.ts
+./src/main/resources/lib/browserSync.ts
 [source,typescript]
 ----
-const contribution = `<script src="${scheme}://${host}:${
+return `${scheme}://${host}:${
     // @ts-expect-error Is replaced at build time by tsup:
     process.env.BROWSER_SYNC_PORT
-}/browser-sync/browser-sync-client.js"></script>`
+}/browser-sync/browser-sync-client.js`;
 ----
 
 NOTE: The `process` object is only available in the Node runtime environment, so it will not work in Enonic XP server-side environment. But since TSUP replaces `process.env.BROWSER_SYNC_PORT` with the string `3000` at compile-time, there is no problem. The transpiled code will look something like this:
 
-./build/resources/main/site/processors/browserSync.js
+./build/resources/main/lib/browserSync.js
 [source,javascript]
 ----
-var contribution = '<script src="'
-    .concat(scheme, "://")
-    .concat(host, ":", "3000", '/browser-sync/browser-sync-client.js"></script>');
+return "".concat(scheme, "://").concat(host, ":", "3000", "/browser-sync/browser-sync-client.js");
 ----
 
 ==== Code splitting
