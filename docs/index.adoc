@@ -355,6 +355,47 @@ inject: [
 ]
 ----
 
+==== Environment variable replacement
+
+Sometimes you need to replace environment variables in your code, for example, when you want to use different values in development and production environments, or when you want to use secrets or configuration which are not checked into source control.
+
+In the starter there is an example of how to do this.
+
+At compiletime we're setting the `BROWSER_SYNC_PORT` environment variable to `3000`:
+
+./tsup/server.ts
+[source,typescript]
+----
+return {
+    // ...
+    env: {
+        BROWSER_SYNC_PORT: '3000',
+    },
+    // ...
+}
+----
+
+Then in the code we're using the `BROWSER_SYNC_PORT` environment variable via `process.env`:
+
+./src/main/resources/site/processors/browserSync.ts
+[source,typescript]
+----
+const contribution = `<script src="${scheme}://${host}:${
+    // @ts-expect-error Is replaced at build time by tsup:
+    process.env.BROWSER_SYNC_PORT
+}/browser-sync/browser-sync-client.js"></script>`
+----
+
+NOTE: The `process` object is only available in the Node runtime environment, so it will not work in Enonic XP server-side environment. But since TSUP replaces `process.env.BROWSER_SYNC_PORT` with the string `3000` at compile-time, there is no problem. The transpiled code will look something like this:
+
+./build/resources/main/site/processors/browserSync.js
+[source,javascript]
+----
+var contribution = '<script src="'
+    .concat(scheme, "://")
+    .concat(host, ":", "3000", '/browser-sync/browser-sync-client.js"></script>');
+----
+
 ==== Code splitting
 
 CAUTION: Everything you add via imports, polyfills, banners, injections, etc increases the size of the resources which need to be loaded into memory at runtime. The more you add, the longer the warmup time becomes.
