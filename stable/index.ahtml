@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Starter tsup</title>
+<title>TSup Starter</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,7 +436,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Starter tsup</h1>
+<h1>TSup Starter</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -468,8 +468,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#incremental_build">Incremental build</a>
 <ul class="sectlevel3">
 <li><a href="#continuous_build">Continuous build</a></li>
-<li><a href="#watch_mode">Watch mode</a></li>
-<li><a href="#development_mode">Development mode</a></li>
+<li><a href="#hot_reload">Hot reload</a></li>
 </ul>
 </li>
 </ul>
@@ -478,81 +477,88 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#enonic_xp_api">Enonic XP API</a>
 <ul class="sectlevel3">
-<li><a href="#include">..1. Include</a></li>
-<li><a href="#externals">..2. Externals</a></li>
-<li><a href="#import">..3. Import</a></li>
+<li><a href="#include">Include</a></li>
+<li><a href="#externals">Externals</a></li>
+<li><a href="#import">Import</a></li>
 </ul>
 </li>
-<li><a href="#node_modules">.1. Node modules</a>
+<li><a href="#node_modules">Node modules</a>
 <ul class="sectlevel3">
-<li><a href="#installing">.1.1. Installing</a></li>
-<li><a href="#bundling">.1.2. Bundling</a></li>
-<li><a href="#polyfill_node">.1.3. Polyfill Node</a></li>
-<li><a href="#the_global_object">.1.4. The Global object</a></li>
-<li><a href="#injection">.1.5. Injection</a></li>
-<li><a href="#environment_variable_replacement">.1.6. Environment variable replacement</a></li>
-<li><a href="#code_splitting">.1.7. Code splitting</a></li>
+<li><a href="#installing">Installing</a></li>
+<li><a href="#bundling">Bundling</a></li>
+<li><a href="#polyfill_node">Polyfill Node</a></li>
+<li><a href="#the_global_object">The Global object</a></li>
+<li><a href="#injection">Injection</a></li>
+<li><a href="#environment_variable_replacement">Environment variable replacement</a></li>
+<li><a href="#code_splitting">Code splitting</a></li>
 </ul>
 </li>
-<li><a href="#tree_shaking">.2. Tree-shaking</a></li>
+<li><a href="#tree_shaking">Tree-shaking</a></li>
 </ul>
 </li>
-<li><a href="#client_side">1. Client-side</a>
+<li><a href="#client_side">Client-side</a>
 <ul class="sectlevel2">
-<li><a href="#content_security_policy">1.1. Content Security Policy</a></li>
-<li><a href="#react">1.2. React</a></li>
+<li><a href="#content_security_policy">Content Security Policy</a></li>
+<li><a href="#react">React</a></li>
 </ul>
 </li>
-<li><a href="#tools">2. Tools</a>
+<li><a href="#tools">Tools</a>
 <ul class="sectlevel2">
-<li><a href="#code_completion">2.1. Code completion</a></li>
-<li><a href="#type_checking">2.2. Type checking</a></li>
-<li><a href="#tsconfig_json">2.3. tsconfig.json</a></li>
+<li><a href="#code_completion">Code completion</a></li>
+<li><a href="#type_checking">Type checking</a></li>
+<li><a href="#tsconfig_json">tsconfig.json</a></li>
 </ul>
 </li>
-<li><a href="#code_hierarchy">3. Code Hierarchy</a>
+<li><a href="#code_hierarchy">Code Hierarchy</a>
 <ul class="sectlevel2">
-<li><a href="#admin">3.1. Admin</a>
+<li><a href="#admin">Admin</a>
 <ul class="sectlevel3">
-<li><a href="#tool">3.1.1. Tool</a></li>
-<li><a href="#widgets">3.1.2. Widgets</a></li>
-<li><a href="#dashboard">3.1.3. Dashboard</a></li>
-<li><a href="#menu_item">3.1.4. Menu item</a></li>
-<li><a href="#context_panel">3.1.5. Context panel</a></li>
+<li><a href="#tool">Tool</a></li>
+<li><a href="#widgets">Widgets</a></li>
+<li><a href="#dashboard">Dashboard</a></li>
+<li><a href="#menu_item">Menu item</a></li>
+<li><a href="#context_panel">Context panel</a></li>
 </ul>
 </li>
-<li><a href="#assets">3.2. Assets</a>
+<li><a href="#assets">Assets</a>
 <ul class="sectlevel3">
-<li><a href="#assets_service">3.2.1. Assets service</a></li>
-<li><a href="#static">3.2.2. Static</a></li>
+<li><a href="#assets_service">Assets service</a></li>
+<li><a href="#static">Static</a></li>
 </ul>
 </li>
-<li><a href="#error">3.3. Error</a></li>
-<li><a href="#i18n">3.4. I18n</a></li>
-<li><a href="#lib">3.5. Lib</a></li>
-<li><a href="#services">3.6. Services</a></li>
-<li><a href="#site">3.7. Site</a>
+<li><a href="#error">Error</a></li>
+<li><a href="#i18n">I18n</a></li>
+<li><a href="#lib">Lib</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#site">Site</a>
 <ul class="sectlevel3">
-<li><a href="#content_type">3.7.1. Content Type</a></li>
-<li><a href="#components">3.7.2. Components</a>
+<li><a href="#content_type">Content Type</a></li>
+<li><a href="#components">Components</a>
 <ul class="sectlevel4">
 <li><a href="#page">Page</a></li>
 <li><a href="#layout">Layout</a></li>
 <li><a href="#part">Part</a></li>
 </ul>
 </li>
-<li><a href="#response_processors">3.7.3. Response processors</a></li>
-<li><a href="#site_mappings">3.7.4. Site Mappings</a></li>
+<li><a href="#response_processors">Response processors</a></li>
+<li><a href="#site_mappings">Site Mappings</a></li>
 </ul>
 </li>
-<li><a href="#tasks">3.8. Tasks</a></li>
-<li><a href="#webapp">3.9. Webapp</a></li>
+<li><a href="#tasks">Tasks</a></li>
+<li><a href="#webapp">Webapp</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Starter for Enonic apps based on TSup</p>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="features"><a class="link" href="#features">Features</a></h2>
 <div class="sectionbody">
@@ -586,6 +592,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>Code splitting (chunks)</p>
+</li>
+<li>
+<p>Hot reload (changes appear without additional build)</p>
 </li>
 </ul>
 </div>
@@ -812,7 +821,7 @@ Some node modules don&#8217;t support the newest versions of Node (yet). In this
 <div class="sect3">
 <h4 id="system_node"><a class="link" href="#system_node">System Node</a></h4>
 <div class="paragraph">
-<p>Sometimes you want to run node scripts directly (not via Gradle). For example, to run Enonic XP in the <a href="#watch_mode">Watch mode</a>.</p>
+<p>Sometimes you want to run node scripts directly (not via Gradle). For example, to run Enonic XP in the <a href="#Watch mode">[Watch mode]</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -870,53 +879,63 @@ An important part of any build tool is the ability to avoid doing work that has 
 </div>
 </div>
 <div class="sect3">
-<h4 id="watch_mode"><a class="link" href="#watch_mode">Watch mode</a></h4>
+<h4 id="hot_reload"><a class="link" href="#hot_reload">Hot reload</a></h4>
 <div class="paragraph">
-<p>Tsup will watch files for changes and only recompile that file, and any files that depend on that file, and files that depend on them, and so on&#8230;&#8203;, but nothing else, i.e. the minimal amount of recompilation for a "complete" build. To make Tsup Starter "hot reload" client-side assets, execute the following command:</p>
+<p>This starter supports hot reload.
+Changes in your source code - both server-side and client-side - will be automatically rebuilt and displayed in the browser
+without you having to manually rebuild the app or reload the browser window.</p>
+</div>
+<div class="paragraph">
+<p>Follow the steps below to enable this mode (we assume you are using Enonic CLI).</p>
+</div>
+<div class="paragraph">
+<p>1.Start XP sandbox in dev mode by running this command from inside your project folder:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">npm run watch</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic sandbox start --dev</code></pre>
 </div>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-However, this does <strong>not</strong> produce a jar file, which is what Enonic XP requires to deploy apps.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-To run new code <strong>without</strong> redeploying an app, start the Enonic XP distribution in Development mode (by passing <code>--dev</code> argument to CLI command when starting an Enonic sandbox or deploying a project), then start the project in watch mode with the command above.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="development_mode"><a class="link" href="#development_mode">Development mode</a></h4>
 <div class="paragraph">
-<p>Enonic XP can be run in a special mode known as <a href="https://developer.enonic.com/docs/xp/stable/apps/build-system#development_mode">Development mode</a>. In this mode, XP will read files directly from their source locations (<code>build/resources/main</code>, and even <code>src/main/resources</code>).</p>
+<p>2.In another terminal window run your project in the dev mode:</p>
 </div>
-<div class="admonitionblock caution">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project dev</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-In order for this to work, Enonic XP needs to know where those folders are. That information is contained within the app&#8217;s jar file. So you need to make an initial deployment of your jar file, or whenever you rearrange files in your project. Enonic XP will "fall back" to the jar file, if a file is not found in its source location. So when you delete a source file, it is probably a good idea to do a full build and redeploy a fresh jar file without the deleted file.
+This mode is provided by BrowserSync utility which is running on port 3000 and proxying changes to port 8080 used by Enonic XP. If you are using port 3000 for something else, make sure you change <code>BROWSER_SYNC_PORT</code> in server config properties.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">/tsup/server.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-typescript" data-lang="typescript">return {
+    // ...
+    env: {
+        BROWSER_SYNC_PORT: '3000',
+    },
+    // ...
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Hot reload will only work in <code>preview</code> and <code>live</code> modes, i.e. outside Content Studio.
 </td>
 </tr>
 </table>
@@ -952,7 +971,7 @@ Currently, Enonic XP JavaScript framework only has limited <code>ECAMScript 6/20
 <p>In order to use Enonic XP API libraries in your code, the following steps are required:</p>
 </div>
 <div class="sect3">
-<h4 id="include"><a class="link" href="#include">..1. Include</a></h4>
+<h4 id="include"><a class="link" href="#include">Include</a></h4>
 <div class="paragraph">
 <p>Add an API library as a dependency to your <code>build.gradle</code>:</p>
 </div>
@@ -978,7 +997,7 @@ For your convenience, we have included all existing API libraries but commented 
 </div>
 </div>
 <div class="sect3">
-<h4 id="externals"><a class="link" href="#externals">..2. Externals</a></h4>
+<h4 id="externals"><a class="link" href="#externals">Externals</a></h4>
 <div class="paragraph">
 <p>Jar file of an API library typically contains a CJS wrapper which is required at runtime.</p>
 </div>
@@ -995,7 +1014,7 @@ For your convenience, we have included all existing API libraries but commented 
 </div>
 </div>
 <div class="sect3">
-<h4 id="import"><a class="link" href="#import">..3. Import</a></h4>
+<h4 id="import"><a class="link" href="#import">Import</a></h4>
 <div class="listingblock">
 <div class="title">/src/main/resources/site/page/examplePage/examplePage.ts</div>
 <div class="content">
@@ -1014,12 +1033,12 @@ export function get() {
 </div>
 </div>
 <div class="sect2">
-<h3 id="node_modules"><a class="link" href="#node_modules">.1. Node modules</a></h3>
+<h3 id="node_modules"><a class="link" href="#node_modules">Node modules</a></h3>
 <div class="paragraph">
 <p>You can use node modules in your code, but there are come steps/caveats to consider:</p>
 </div>
 <div class="sect3">
-<h4 id="installing"><a class="link" href="#installing">.1.1. Installing</a></h4>
+<h4 id="installing"><a class="link" href="#installing">Installing</a></h4>
 <div class="paragraph">
 <p>You can use the following command to install a node module you want to use (for example, <code>sha.js</code>):</p>
 </div>
@@ -1033,7 +1052,7 @@ export function get() {
 </div>
 </div>
 <div class="sect3">
-<h4 id="bundling"><a class="link" href="#bundling">.1.2. Bundling</a></h4>
+<h4 id="bundling"><a class="link" href="#bundling">Bundling</a></h4>
 <div class="paragraph">
 <p>By default, Tsup starter bundles all imported modules <a href="https://tsup.egoist.dev/#excluding-packages">EXCEPT</a> dependencies and peerDependencies. Since sha.js (in the example above) is added as a dependency, it will <span class="red">NOT</span> be bundled!</p>
 </div>
@@ -1050,7 +1069,7 @@ export function get() {
 </div>
 </div>
 <div class="sect3">
-<h4 id="polyfill_node"><a class="link" href="#polyfill_node">.1.3. Polyfill Node</a></h4>
+<h4 id="polyfill_node"><a class="link" href="#polyfill_node">Polyfill Node</a></h4>
 <div class="admonitionblock caution">
 <table>
 <tr>
@@ -1088,7 +1107,7 @@ esbuildPlugins: [
 </div>
 </div>
 <div class="sect3">
-<h4 id="the_global_object"><a class="link" href="#the_global_object">.1.4. The Global object</a></h4>
+<h4 id="the_global_object"><a class="link" href="#the_global_object">The Global object</a></h4>
 <div class="paragraph">
 <p>Different JavaScript runtime environments have different properties on their <a href="https://developer.mozilla.org/en-US/docs/Glossary/Global_object">Global object</a>.</p>
 </div>
@@ -1131,7 +1150,7 @@ One might be tempted to polyfill all the ways of accessing the Global object, bu
 </div>
 </div>
 <div class="sect3">
-<h4 id="injection"><a class="link" href="#injection">.1.5. Injection</a></h4>
+<h4 id="injection"><a class="link" href="#injection">Injection</a></h4>
 <div class="paragraph">
 <p>Sometimes all you need to polyfill is a single function rather than a whole API.</p>
 </div>
@@ -1161,7 +1180,7 @@ But if you are using a function all over the place, you can use injection to mak
 </div>
 </div>
 <div class="sect3">
-<h4 id="environment_variable_replacement"><a class="link" href="#environment_variable_replacement">.1.6. Environment variable replacement</a></h4>
+<h4 id="environment_variable_replacement"><a class="link" href="#environment_variable_replacement">Environment variable replacement</a></h4>
 <div class="paragraph">
 <p>Sometimes you need to replace environment variables in your code, for example, when you want to use different values in development and production environments, or when you want to use secrets or configuration which are not checked into source control.</p>
 </div>
@@ -1215,7 +1234,7 @@ The <code>process</code> object is only available in the Node runtime environmen
 </div>
 </div>
 <div class="sect3">
-<h4 id="code_splitting"><a class="link" href="#code_splitting">.1.7. Code splitting</a></h4>
+<h4 id="code_splitting"><a class="link" href="#code_splitting">Code splitting</a></h4>
 <div class="admonitionblock caution">
 <table>
 <tr>
@@ -1275,7 +1294,7 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 </div>
 </div>
 <div class="sect2">
-<h3 id="tree_shaking"><a class="link" href="#tree_shaking">.2. Tree-shaking</a></h3>
+<h3 id="tree_shaking"><a class="link" href="#tree_shaking">Tree-shaking</a></h3>
 <div class="paragraph">
 <p>Tree shaking refers to the process of eliminating or "shaking off" dead code or unused code from the final bundled output. Tools that support tree-shaking typically only work with the <code>ECMAScript module</code> (ESM) format.</p>
 </div>
@@ -1289,7 +1308,7 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 </div>
 </div>
 <div class="sect1">
-<h2 id="client_side"><a class="link" href="#client_side">1. Client-side</a></h2>
+<h2 id="client_side"><a class="link" href="#client_side">Client-side</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>"Client-side" and "Server-side" are web development terms that describe where application code runs.</p>
@@ -1326,7 +1345,7 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 </ul>
 </div>
 <div class="sect2">
-<h3 id="content_security_policy"><a class="link" href="#content_security_policy">1.1. Content Security Policy</a></h3>
+<h3 id="content_security_policy"><a class="link" href="#content_security_policy">Content Security Policy</a></h3>
 <div class="paragraph">
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy (CSP)</a> makes it possible to configure what is allowed to run on the client-side. You can limit scripts, images, media and stylesheets. You can even configure if and how violations are reported.</p>
 </div>
@@ -1335,7 +1354,7 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 </div>
 </div>
 <div class="sect2">
-<h3 id="react"><a class="link" href="#react">1.2. React</a></h3>
+<h3 id="react"><a class="link" href="#react">React</a></h3>
 <div class="paragraph">
 <p>Tsup Starter is able to transpile React TSX/JSX source files into JavaScript code for the browser.</p>
 </div>
@@ -1358,17 +1377,17 @@ If you need Server-side Rendering (SSR), use <a href="https://developer.enonic.c
 </div>
 </div>
 <div class="sect1">
-<h2 id="tools"><a class="link" href="#tools">2. Tools</a></h2>
+<h2 id="tools"><a class="link" href="#tools">Tools</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="code_completion"><a class="link" href="#code_completion">2.1. Code completion</a></h3>
+<h3 id="code_completion"><a class="link" href="#code_completion">Code completion</a></h3>
 <div class="paragraph">
 <p>When programming, it&#8217;s very useful to get <code>code completion</code> and <a href="#type_checking">Type checking</a> directly in the code editor.
 To enable this, IDE will typically look for <a href="#_tsconfig_json">tsconfig.json</a> files.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="type_checking"><a class="link" href="#type_checking">2.2. Type checking</a></h3>
+<h3 id="type_checking"><a class="link" href="#type_checking">Type checking</a></h3>
 <div class="paragraph">
 <p>In addition to type checking directly in the IDE, it&#8217;s a good idea to make type checking part of the build process.
 In Tsup Starter this is set up via <code>check</code> statements in the scripts section of the <code>package.json</code> file. Type checking is currently skipped for development builds.</p>
@@ -1378,7 +1397,7 @@ In Tsup Starter this is set up via <code>check</code> statements in the scripts 
 </div>
 </div>
 <div class="sect2">
-<h3 id="tsconfig_json"><a class="link" href="#tsconfig_json">2.3. tsconfig.json</a></h3>
+<h3 id="tsconfig_json"><a class="link" href="#tsconfig_json">tsconfig.json</a></h3>
 <div class="paragraph">
 <p>Tsup Starter comes with four <code>tsconfig.json</code> files:</p>
 </div>
@@ -1435,15 +1454,15 @@ Sometimes a folder may contain both code for the server-side and the client-side
 </div>
 </div>
 <div class="sect1">
-<h2 id="code_hierarchy"><a class="link" href="#code_hierarchy">3. Code Hierarchy</a></h2>
+<h2 id="code_hierarchy"><a class="link" href="#code_hierarchy">Code Hierarchy</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="admin"><a class="link" href="#admin">3.1. Admin</a></h3>
+<h3 id="admin"><a class="link" href="#admin">Admin</a></h3>
 <div class="paragraph">
 <p>Extensions of Admin UI are located in <code>src/main/resources/admin</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="tool"><a class="link" href="#tool">3.1.1. Tool</a></h4>
+<h4 id="tool"><a class="link" href="#tool">Tool</a></h4>
 <div class="paragraph">
 <p>There is an admin tool called "Sample Tool" included in the Starter, located in <code>src/main/resources/admin/tools/tool</code>. When a project based on this starter is deployed, you will see it inside the XP menu.</p>
 </div>
@@ -1483,7 +1502,7 @@ Sometimes a folder may contain both code for the server-side and the client-side
 </div>
 </div>
 <div class="sect3">
-<h4 id="widgets"><a class="link" href="#widgets">3.1.2. Widgets</a></h4>
+<h4 id="widgets"><a class="link" href="#widgets">Widgets</a></h4>
 <div class="paragraph">
 <p>The starter includes examples for the following widget interfaces:</p>
 </div>
@@ -1502,7 +1521,7 @@ Sometimes a folder may contain both code for the server-side and the client-side
 </div>
 </div>
 <div class="sect3">
-<h4 id="dashboard"><a class="link" href="#dashboard">3.1.3. Dashboard</a></h4>
+<h4 id="dashboard"><a class="link" href="#dashboard">Dashboard</a></h4>
 <div class="paragraph">
 <p>The Dashboard widget (titled "Sample dashboard widget") will be shown on the XP Dashboard page when you log in into Admin console.</p>
 </div>
@@ -1525,7 +1544,7 @@ The next two widgets are extensions of Content Studio, so you&#8217;ll need to i
 </div>
 </div>
 <div class="sect3">
-<h4 id="menu_item"><a class="link" href="#menu_item">3.1.4. Menu item</a></h4>
+<h4 id="menu_item"><a class="link" href="#menu_item">Menu item</a></h4>
 <div class="paragraph">
 <p>Content Studio has a menu on the left-hand side and this widget&#8217;s icon will appear in this menu.</p>
 </div>
@@ -1536,7 +1555,7 @@ The next two widgets are extensions of Content Studio, so you&#8217;ll need to i
 </div>
 </div>
 <div class="sect3">
-<h4 id="context_panel"><a class="link" href="#context_panel">3.1.5. Context panel</a></h4>
+<h4 id="context_panel"><a class="link" href="#context_panel">Context panel</a></h4>
 <div class="paragraph">
 <p>You&#8217;ll find this widget inside the Context Panel on the right hand side of Content Studio&#8217;s. This panel can be opened by clicking the burger icon under the XP menu icon.</p>
 </div>
@@ -1560,7 +1579,7 @@ The last two widgets are using inline styling, but you can define CSS styles in 
 </div>
 </div>
 <div class="sect2">
-<h3 id="assets"><a class="link" href="#assets">3.2. Assets</a></h3>
+<h3 id="assets"><a class="link" href="#assets">Assets</a></h3>
 <div class="paragraph">
 <p>Tsup Starter provides examples for two main ways of serving client-side assets:</p>
 </div>
@@ -1587,7 +1606,7 @@ We recommend using the <a href="#static">Static</a> folder, since it enables imm
 </table>
 </div>
 <div class="sect3">
-<h4 id="assets_service"><a class="link" href="#assets_service">3.2.1. Assets service</a></h4>
+<h4 id="assets_service"><a class="link" href="#assets_service">Assets service</a></h4>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -1626,7 +1645,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 </div>
 </div>
 <div class="sect3">
-<h4 id="static"><a class="link" href="#static">3.2.2. Static</a></h4>
+<h4 id="static"><a class="link" href="#static">Static</a></h4>
 <div class="paragraph">
 <p>Files in the <code>static</code> folder are not available via the <a href="#assets_service">Assets service</a>. Instead, they are made available via the <a href="https://developer.enonic.com/docs/static-asset-lib/master">Static Assets Library</a>.</p>
 </div>
@@ -1663,7 +1682,7 @@ Read more about <a href="https://developer.enonic.com/docs/static-asset-lib/stab
 </div>
 </div>
 <div class="sect2">
-<h3 id="error"><a class="link" href="#error">3.3. Error</a></h3>
+<h3 id="error"><a class="link" href="#error">Error</a></h3>
 <div class="paragraph">
 <p>The Starter includes a sample error handler at <code>src/main/resources/error/error.ts</code>.</p>
 </div>
@@ -1681,19 +1700,19 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/framework/e
 </div>
 </div>
 <div class="sect2">
-<h3 id="i18n"><a class="link" href="#i18n">3.4. I18n</a></h3>
+<h3 id="i18n"><a class="link" href="#i18n">I18n</a></h3>
 <div class="paragraph">
 <p>The starter includes a couple of phrase resource bundles at  <code>src/main/resources/i18n/</code>. Localisation itself is used by the sample page template controller at <code>src/main/resources/site/pages/sample-page.ts</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="lib"><a class="link" href="#lib">3.5. Lib</a></h3>
+<h3 id="lib"><a class="link" href="#lib">Lib</a></h3>
 <div class="paragraph">
 <p>The starter includes several lib examples (which are essentially simple helpers that can be imported by other modules) at `src/main/resources/lib/'.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="services"><a class="link" href="#services">3.6. Services</a></h3>
+<h3 id="services"><a class="link" href="#services">Services</a></h3>
 <div class="paragraph">
 <p>The starter includes a sample HTTP service (that communicates with JVM) at `src/main/resources/services/'.</p>
 </div>
@@ -1711,7 +1730,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 </div>
 </div>
 <div class="sect2">
-<h3 id="site"><a class="link" href="#site">3.7. Site</a></h3>
+<h3 id="site"><a class="link" href="#site">Site</a></h3>
 <div class="paragraph">
 <p>The starter includes necessary setup to build a <a href="https://developer.enonic.com/docs/xp/stable/cms/sites">site</a> using a page controller and sample page components. The site has a simple config declared in `src/main/resources/site/site.xml'. All site components can be found at `src/main/resources/site/'.</p>
 </div>
@@ -1728,7 +1747,7 @@ Use our <a href="https://developer.enonic.com/docs/my-first-site">tutorial</a> t
 </table>
 </div>
 <div class="sect3">
-<h4 id="content_type"><a class="link" href="#content_type">3.7.1. Content Type</a></h4>
+<h4 id="content_type"><a class="link" href="#content_type">Content Type</a></h4>
 <div class="paragraph">
 <p>The starter includes a sample content type with a few basic input types at `src/main/resources/site/content-types/sample-type.xml'.</p>
 </div>
@@ -1746,7 +1765,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/content
 </div>
 </div>
 <div class="sect3">
-<h4 id="components"><a class="link" href="#components">3.7.2. Components</a></h4>
+<h4 id="components"><a class="link" href="#components">Components</a></h4>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -1779,7 +1798,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/compone
 </div>
 </div>
 <div class="sect3">
-<h4 id="response_processors"><a class="link" href="#response_processors">3.7.3. Response processors</a></h4>
+<h4 id="response_processors"><a class="link" href="#response_processors">Response processors</a></h4>
 <div class="paragraph">
 <p>The starter includes a sample response processors (that injects a header into response) at `src/main/resources/site/processors/sample-processor.ts'.</p>
 </div>
@@ -1809,9 +1828,9 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/respons
 </div>
 </div>
 <div class="sect3">
-<h4 id="site_mappings"><a class="link" href="#site_mappings">3.7.4. Site Mappings</a></h4>
+<h4 id="site_mappings"><a class="link" href="#site_mappings">Site Mappings</a></h4>
 <div class="paragraph">
-<p>The starter includes a sample site mapping (declared in <code>src/main/resources/site/site.xml') which maps assets inside `src/main/resources/static/</code> folder with a controller at `src/main/resources/site/static.ts' which generates correct hash-based static path for each asset.</p>
+<p>The starter includes a sample site mapping (declared in <code>src/main/resources/site/site.xml</code>) which maps assets inside <code>src/main/resources/static/</code> folder with a controller at `src/main/resources/site/static.ts' which generates correct hash-based static path for each asset.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1828,9 +1847,10 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/mapping
 </div>
 </div>
 <div class="sect2">
-<h3 id="tasks"><a class="link" href="#tasks">3.8. Tasks</a></h3>
+<h3 id="tasks"><a class="link" href="#tasks">Tasks</a></h3>
 <div class="paragraph">
-<p>The starter includes a couple of tasks controller examples (located in `src/main/resources/tasks/'). One of them showcases how to avoid simultaneous execution of more than one instance of the same task. Another has examples of using Application, Schema and Task APIs.</p>
+<p>The starter includes a sample task controller (located in `src/main/resources/tasks/task/) which makes use of Application, Schema and Task APIs.
+It also shows how to avoid simultaneous execution of more than one instance of the same task by submitting the same task twice then rejecting one of them.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1846,9 +1866,9 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/framework/t
 </div>
 </div>
 <div class="sect2">
-<h3 id="webapp"><a class="link" href="#webapp">3.9. Webapp</a></h3>
+<h3 id="webapp"><a class="link" href="#webapp">Webapp</a></h3>
 <div class="paragraph">
-<p>The starter includes a sample webapp controller (located in `src/main/resources/webapp/').</p>
+<p>The starter includes a sample webapp controller (located in <code>src/main/resources/webapp/</code>).</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1868,7 +1888,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-04 11:03:14 UTC
+Last updated 2023-09-08 15:11:31 UTC
 </div>
 </div>
 </body>
