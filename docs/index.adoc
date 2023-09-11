@@ -1,4 +1,4 @@
-= TSup Starter
+= Tsup Starter
 :hide-uri-scheme:
 :toc: right
 :toclevels: 4
@@ -31,7 +31,7 @@
 :webpackCache: https://webpack.js.org/configuration/cache/
 :imagesdir: images
 
-Starter for Enonic apps based on TSup
+Feature-rich starter for Enonic XP applications with lightning-fast builder and support for hot reload, designed for development in Typescript.
 
 == Features
 
@@ -40,7 +40,7 @@ Starter for Enonic apps based on TSup
 * Typescript support
 * Fast build times (`tsup` uses `esbuild` and `swc`)
 * Asynchronous (concurrent build targets)
-* Transpilation (TypeScript to JS, SASS to CSS)
+* Transpilation (Typescript to JS, SASS to CSS)
 * Bundling
 * Tree-shaking
 * Polyfilling
@@ -67,6 +67,7 @@ Starter for Enonic apps based on TSup
 * Two template rendering engines (Thymeleaf & Mustache)
 
 === CMS
+
 * Site
 * Sample page template
 * Sample page components (a layout and a part)
