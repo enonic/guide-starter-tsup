@@ -901,7 +901,7 @@ without you having to manually rebuild the app or reload the browser window.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project dev</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project gradle dev</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -1888,7 +1888,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-11 11:10:50 UTC
+Last updated 2023-09-15 16:02:02 UTC
 </div>
 </div>
 </body>
