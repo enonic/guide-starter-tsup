@@ -224,7 +224,7 @@ enonic sandbox start --dev
 
 [source,bash]
 ----
-enonic project dev
+enonic project gradle dev
 ----
 
 IMPORTANT: This mode is provided by BrowserSync utility which is running on port 3000 and proxying changes to port 8080 used by Enonic XP. If you are using port 3000 for something else, make sure you change `BROWSER_SYNC_PORT` in server config properties.
