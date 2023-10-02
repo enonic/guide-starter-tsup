@@ -91,7 +91,7 @@ Once you have the CLI, run the following command to create a new Enonic project 
 
 [source,bash]
 ----
-enonic project create -r starter-tsup
+enonic create foo -r starter-tsup
 ----
 
 == Build environment
@@ -213,19 +213,16 @@ without you having to manually rebuild the app or reload the browser window.
 
 Follow the steps below to enable this mode (we assume you are using Enonic CLI).
 
-1.Start XP sandbox in dev mode by running this command from inside your project folder:
+1. Create a new project (unless you already have it) based on the Tsup starter as described <<#create_project,above>>.
 
+2. Go to the project's folder and start the dev mode:
 [source,bash]
 ----
-enonic sandbox start --dev
+enonic dev
 ----
 
-2.In another terminal window run your project in the dev mode:
+This will start the project's sandbox in development mode and execute dev command which will watch for changes in the source-code and automatically rebuild the app.
 
-[source,bash]
-----
-enonic project gradle dev
-----
 
 IMPORTANT: This mode is provided by BrowserSync utility which is running on port 3000 and proxying changes to port 8080 used by Enonic XP. If you are using port 3000 for something else, make sure you change `BROWSER_SYNC_PORT` in server config properties.
 
@@ -241,7 +238,7 @@ return {
 }
 ----
 
-NOTE: Hot reload will only work in `preview` and `live` modes, i.e. outside Content Studio.
+NOTE: Automatic browser reload will only work in `preview` and `live` modes, i.e. outside Content Studio. This means that it will work for the sample Admin tool and the sample Webapp bundled with this starter, but not for the sample widgets, for example. Changes will still be rebuilt, but you'll have to manually refresh the browser window to see the changes.
 
 
 == Server-side
