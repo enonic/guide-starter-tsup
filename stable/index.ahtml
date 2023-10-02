@@ -715,7 +715,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project create -r starter-tsup</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic create foo -r starter-tsup</code></pre>
 </div>
 </div>
 </div>
@@ -888,21 +888,23 @@ without you having to manually rebuild the app or reload the browser window.</p>
 <div class="paragraph">
 <p>Follow the steps below to enable this mode (we assume you are using Enonic CLI).</p>
 </div>
-<div class="paragraph">
-<p>1.Start XP sandbox in dev mode by running this command from inside your project folder:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a new project (unless you already have it) based on the Tsup starter as described <a href="#create_project">above</a>.</p>
+</li>
+<li>
+<p>Go to the project&#8217;s folder and start the dev mode:</p>
+</li>
+</ol>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">enonic sandbox start --dev</code></pre>
+<pre>enonic dev</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>2.In another terminal window run your project in the dev mode:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project gradle dev</code></pre>
-</div>
+<p>This will start the project&#8217;s sandbox in development mode and execute dev command which will watch for changes in the source-code and automatically rebuild the app.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -935,7 +937,7 @@ This mode is provided by BrowserSync utility which is running on port 3000 and p
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Hot reload will only work in <code>preview</code> and <code>live</code> modes, i.e. outside Content Studio.
+Automatic browser reload will only work in <code>preview</code> and <code>live</code> modes, i.e. outside Content Studio. This means that it will work for the sample Admin tool and the sample Webapp bundled with this starter, but not for the sample widgets, for example. Changes will still be rebuilt, but you&#8217;ll have to manually refresh the browser window to see the changes.
 </td>
 </tr>
 </table>
@@ -1888,7 +1890,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-15 16:02:02 UTC
+Last updated 2023-10-02 17:21:53 UTC
 </div>
 </div>
 </body>
