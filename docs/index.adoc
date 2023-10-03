@@ -315,15 +315,27 @@ This will add `sha.js` under dependencies in the `package.json` file, and downlo
 
 ==== Bundling
 
-By default, Tsup starter bundles all imported modules {excludingPackages}[EXCEPT] dependencies and peerDependencies. Since sha.js (in the example above) is added as a dependency, it will [red]#NOT# be bundled!
+By default, Tsup starter bundles all imported modules {excludingPackages}[EXCEPT] dependencies and peerDependencies. Since `sha.js` (in the example above) is added as a dependency, it will [red]#NOT# be bundled!
 
-To fix that we have to list it under `noExternals` in the Tsup build config:
+To fix that we have to list it under `noExternal` in the Tsup build config:
+
+For server-side dependencies this is done in `tsup/server.ts`:
 
 ./tsup/server.ts
 [source,typescript]
 ----
 noExternal: [
     'sha.js',
+],
+----
+
+For client-side dependencies this is done either in `tsup/client-static.ts` (<<Static,static>> client-side assets) or `tsup/client-asset.ts` ("<<Assets, standard>>" client-side assets):
+
+./tsup/server.ts
+[source,typescript]
+----
+noExternal: [
+    'dayjs',
 ],
 ----
 
@@ -701,3 +713,9 @@ TIP: Read more about https://developer.enonic.com/docs/xp/stable/framework/tasks
 The starter includes a sample webapp controller (located in `src/main/resources/webapp/`).
 
 TIP: Read more about https://developer.enonic.com/docs/xp/stable/runtime/engines/webapp-engine[Webapp engine].
+
+=== Constants
+
+There are two files called `constants.ts`: in `tsup/constants.ts` (used by Tsup for building server- and client-side bundles) and in `src/main/resources/constants.ts` (used by XP resources inside `src/main/resources`). If you, for example, decide to rename `src/main/resources/static` folder to something else, you'd have to do it in both files `constants.ts`.
+
+Also, the latter file contains a property called `DEBUG_MODE` (set to `true` by default). This property is used to output helpful log messages in different places of the Starter. Set it to `false` to skip the log messages.
