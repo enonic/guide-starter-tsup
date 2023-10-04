@@ -546,6 +546,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#tasks">Tasks</a></li>
 <li><a href="#webapp">Webapp</a></li>
+<li><a href="#constants">Constants</a></li>
 </ul>
 </li>
 </ul>
@@ -1056,16 +1057,30 @@ export function get() {
 <div class="sect3">
 <h4 id="bundling"><a class="link" href="#bundling">Bundling</a></h4>
 <div class="paragraph">
-<p>By default, Tsup starter bundles all imported modules <a href="https://tsup.egoist.dev/#excluding-packages">EXCEPT</a> dependencies and peerDependencies. Since sha.js (in the example above) is added as a dependency, it will <span class="red">NOT</span> be bundled!</p>
+<p>By default, Tsup starter bundles all imported modules <a href="https://tsup.egoist.dev/#excluding-packages">EXCEPT</a> dependencies and peerDependencies. Since <code>sha.js</code> (in the example above) is added as a dependency, it will <span class="red">NOT</span> be bundled!</p>
 </div>
 <div class="paragraph">
-<p>To fix that we have to list it under <code>noExternals</code> in the Tsup build config:</p>
+<p>To fix that we have to list it under <code>noExternal</code> in the Tsup build config:</p>
+</div>
+<div class="paragraph">
+<p>For server-side dependencies this is done in <code>tsup/server.ts</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">/tsup/server.ts</div>
 <div class="content">
 <pre class="highlight"><code class="language-typescript" data-lang="typescript">noExternal: [
     'sha.js',
+],</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For client-side dependencies this is done either in <code>tsup/client-static.ts</code> (<a href="#static">static</a> client-side assets) or <code>tsup/client-asset.ts</code> ("<a href="#assets">standard</a>" client-side assets):</p>
+</div>
+<div class="listingblock">
+<div class="title">/tsup/server.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-typescript" data-lang="typescript">noExternal: [
+    'dayjs',
 ],</code></pre>
 </div>
 </div>
@@ -1885,12 +1900,21 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="constants"><a class="link" href="#constants">Constants</a></h3>
+<div class="paragraph">
+<p>There are two files called <code>constants.ts</code>: in <code>tsup/constants.ts</code> (used by Tsup for building server- and client-side bundles) and in <code>src/main/resources/constants.ts</code> (used by XP resources inside <code>src/main/resources</code>). If you, for example, decide to rename <code>src/main/resources/static</code> folder to something else, you&#8217;d have to do it in both files <code>constants.ts</code>.</p>
+</div>
+<div class="paragraph">
+<p>Also, the latter file contains a property called <code>DEBUG_MODE</code> (set to <code>true</code> by default). This property is used to output helpful log messages in different places of the Starter. Set it to <code>false</code> to skip the log messages.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-10-02 17:21:53 UTC
+Last updated 2023-10-04 13:01:13 UTC
 </div>
 </div>
 </body>
