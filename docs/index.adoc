@@ -10,7 +10,7 @@
 :enonicAssetUrl: https://developer.enonic.com/docs/xp/stable/api/lib-portal#asseturl
 :enonicCSP: https://developer.enonic.com/docs/content-studio/stable/security#content_security_policy
 :enonicDevMode: https://developer.enonic.com/docs/xp/stable/apps/build-system#development_mode
-:enonicLibStatic: https://developer.enonic.com/docs/static-asset-lib/master
+:enonicLibStatic: https://developer.enonic.com/docs/static-asset-lib/stable
 :enonicReact4xp: https://developer.enonic.com/docs/react4xp/
 :enonicStart: https://developer.enonic.com/start
 
@@ -656,35 +656,32 @@ The starter includes a sample HTTP service (that communicates with JVM) at `src/
 
 TIP: Read more about https://developer.enonic.com/docs/xp/stable/runtime/engines/http-service[HTTP Services].
 
-=== Site
 
-The starter includes necessary setup to build a https://developer.enonic.com/docs/xp/stable/cms/sites[site] using a page controller and sample page components. The site has a simple config declared in `src/main/resources/site/site.xml'. All site components can be found at `src/main/resources/site/'.
-
-TIP: Use our https://developer.enonic.com/docs/my-first-site[tutorial] to build your first site with Enonic XP.
-
-==== Content Type
+=== Content Type
 
 The starter includes a sample content type with a few basic input types at `src/main/resources/site/content-types/sample-type.xml'.
 
 TIP: Read more about https://developer.enonic.com/docs/xp/stable/cms/content-types[Content Types].
 
 
-==== Components
+=== Site
 
-TIP: Read more about https://developer.enonic.com/docs/xp/stable/cms/components[Page Components].
+The starter includes necessary setup to build a https://developer.enonic.com/docs/xp/stable/cms/sites[site] using a page controller and sample page components. The site has a simple config declared in `src/main/resources/site/site.xml'. All site components can be found at `src/main/resources/site/'.
+
+TIP: Use our https://developer.enonic.com/docs/my-first-site[tutorial] to build your first site with Enonic XP.
 
 
-===== Page
+==== Page component
 
-The starter includes a sample https://developer.enonic.com/docs/xp/stable/cms/components#pages[page component] at `src/main/resources/site/pages/sample-page/'.
+The starter includes a sample https://developer.enonic.com/docs/xp/stable/cms/pages[page component] at `src/main/resources/site/pages/sample-page/'.
 
-===== Layout
+==== Layout component
 
-The starter includes a sample https://developer.enonic.com/docs/xp/stable/cms/components#layout[layout component] at `src/main/resources/site/layouts/sample-layout/'.
+The starter includes a sample https://developer.enonic.com/docs/xp/stable/cms/pages/layouts[layout component] at `src/main/resources/site/layouts/sample-layout/'.
 
-===== Part
+==== Part component
 
-The starter includes a sample https://developer.enonic.com/docs/xp/stable/cms/components#part[part component] at `src/main/resources/site/parts/sample-part/'.
+The starter includes a sample https://developer.enonic.com/docs/xp/stable/cms/pages/parts[part component] at `src/main/resources/site/parts/sample-part/'.
 
 ==== Response processors
 
@@ -692,14 +689,13 @@ The starter includes a sample response processors (that injects a header into re
 
 IMPORTANT: Note that response processors must be declared inside `src/main/resources/site/site.xml'.
 
-TIP: Read more about https://developer.enonic.com/docs/xp/stable/cms/response-processors[Response Processors].
-
+TIP: Read more about https://developer.enonic.com/docs/xp/stable/framework/processors[Response Processors].
 
 ==== Site Mappings
 
 The starter includes a sample site mapping (declared in `src/main/resources/site/site.xml`) which maps assets inside `src/main/resources/static/` folder with a controller at `src/main/resources/site/static.ts' which generates correct hash-based static path for each asset.
 
-TIP: Read more about https://developer.enonic.com/docs/xp/stable/cms/mappings[Site Mappings].
+TIP: Read more about https://developer.enonic.com/docs/xp/stable/framework/mappings[Site Mappings].
 
 === Tasks
 
