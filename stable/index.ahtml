@@ -530,16 +530,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#i18n">I18n</a></li>
 <li><a href="#lib">Lib</a></li>
 <li><a href="#services">Services</a></li>
+<li><a href="#content_type">Content Type</a></li>
 <li><a href="#site">Site</a>
 <ul class="sectlevel3">
-<li><a href="#content_type">Content Type</a></li>
-<li><a href="#components">Components</a>
-<ul class="sectlevel4">
-<li><a href="#page">Page</a></li>
-<li><a href="#layout">Layout</a></li>
-<li><a href="#part">Part</a></li>
-</ul>
-</li>
+<li><a href="#page_component">Page component</a></li>
+<li><a href="#layout_component">Layout component</a></li>
+<li><a href="#part_component">Part component</a></li>
 <li><a href="#response_processors">Response processors</a></li>
 <li><a href="#site_mappings">Site Mappings</a></li>
 </ul>
@@ -1351,7 +1347,7 @@ Libraries typically avoid file name collisions by using their own "namespace" in
 <p>It can be provided by <a href="#services">Services</a>, <a href="#site_mappings">Site Mappings</a>, <a href="#webapp">Webapp</a>, or <a href="#admin">Admin</a>.</p>
 </li>
 <li>
-<p>Client-side code can be inlined in <a href="#components">controllers</a>.</p>
+<p>Client-side code can be inlined in <a href="#Components">controllers</a>.</p>
 </li>
 <li>
 <p>Web frameworks like <a href="#react">React</a> can be used.</p>
@@ -1664,7 +1660,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 <div class="sect3">
 <h4 id="static"><a class="link" href="#static">Static</a></h4>
 <div class="paragraph">
-<p>Files in the <code>static</code> folder are not available via the <a href="#assets_service">Assets service</a>. Instead, they are made available via the <a href="https://developer.enonic.com/docs/static-asset-lib/master">Static Assets Library</a>.</p>
+<p>Files in the <code>static</code> folder are not available via the <a href="#assets_service">Assets service</a>. Instead, they are made available via the <a href="https://developer.enonic.com/docs/static-asset-lib/stable">Static Assets Library</a>.</p>
 </div>
 <div class="paragraph">
 <p>In order to enable immutable urls, a content hash is added to the files names at compile time. The content hash is generated from the file content (and location) and only changes, if the content (or location) of the file changes. This means that the browser can cache the asset "forever", and every time it encounters the url, it can simply load the asset from the cache.</p>
@@ -1747,6 +1743,24 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 </div>
 </div>
 <div class="sect2">
+<h3 id="content_type"><a class="link" href="#content_type">Content Type</a></h3>
+<div class="paragraph">
+<p>The starter includes a sample content type with a few basic input types at `src/main/resources/site/content-types/sample-type.xml'.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/content-types">Content Types</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
 <h3 id="site"><a class="link" href="#site">Site</a></h3>
 <div class="paragraph">
 <p>The starter includes necessary setup to build a <a href="https://developer.enonic.com/docs/xp/stable/cms/sites">site</a> using a page controller and sample page components. The site has a simple config declared in `src/main/resources/site/site.xml'. All site components can be found at `src/main/resources/site/'.</p>
@@ -1764,54 +1778,21 @@ Use our <a href="https://developer.enonic.com/docs/my-first-site">tutorial</a> t
 </table>
 </div>
 <div class="sect3">
-<h4 id="content_type"><a class="link" href="#content_type">Content Type</a></h4>
+<h4 id="page_component"><a class="link" href="#page_component">Page component</a></h4>
 <div class="paragraph">
-<p>The starter includes a sample content type with a few basic input types at `src/main/resources/site/content-types/sample-type.xml'.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/content-types">Content Types</a>.
-</td>
-</tr>
-</table>
+<p>The starter includes a sample <a href="https://developer.enonic.com/docs/xp/stable/cms/pages">page component</a> at `src/main/resources/site/pages/sample-page/'.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="components"><a class="link" href="#components">Components</a></h4>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/components">Page Components</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect4">
-<h5 id="page"><a class="link" href="#page">Page</a></h5>
+<h4 id="layout_component"><a class="link" href="#layout_component">Layout component</a></h4>
 <div class="paragraph">
-<p>The starter includes a sample <a href="https://developer.enonic.com/docs/xp/stable/cms/components#pages">page component</a> at `src/main/resources/site/pages/sample-page/'.</p>
+<p>The starter includes a sample <a href="https://developer.enonic.com/docs/xp/stable/cms/pages/layouts">layout component</a> at `src/main/resources/site/layouts/sample-layout/'.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="layout"><a class="link" href="#layout">Layout</a></h5>
+<div class="sect3">
+<h4 id="part_component"><a class="link" href="#part_component">Part component</a></h4>
 <div class="paragraph">
-<p>The starter includes a sample <a href="https://developer.enonic.com/docs/xp/stable/cms/components#layout">layout component</a> at `src/main/resources/site/layouts/sample-layout/'.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="part"><a class="link" href="#part">Part</a></h5>
-<div class="paragraph">
-<p>The starter includes a sample <a href="https://developer.enonic.com/docs/xp/stable/cms/components#part">part component</a> at `src/main/resources/site/parts/sample-part/'.</p>
-</div>
+<p>The starter includes a sample <a href="https://developer.enonic.com/docs/xp/stable/cms/pages/parts">part component</a> at `src/main/resources/site/parts/sample-part/'.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1838,7 +1819,7 @@ Note that response processors must be declared inside `src/main/resources/site/s
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/response-processors">Response Processors</a>.
+Read more about <a href="https://developer.enonic.com/docs/xp/stable/framework/processors">Response Processors</a>.
 </td>
 </tr>
 </table>
@@ -1856,7 +1837,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/respons
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Read more about <a href="https://developer.enonic.com/docs/xp/stable/cms/mappings">Site Mappings</a>.
+Read more about <a href="https://developer.enonic.com/docs/xp/stable/framework/mappings">Site Mappings</a>.
 </td>
 </tr>
 </table>
@@ -1914,7 +1895,7 @@ Read more about <a href="https://developer.enonic.com/docs/xp/stable/runtime/eng
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-10-04 13:01:13 UTC
+Last updated 2024-01-04 14:29:35 UTC
 </div>
 </div>
 </body>
